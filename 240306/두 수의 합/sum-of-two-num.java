@@ -9,6 +9,7 @@ public class Main {
     static HashMap<Integer, Integer> cntMap = new HashMap<>();
     static HashMap<Integer, Integer> pairMap = new HashMap<>();
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static Set<Integer> set = new HashSet<>();
 
     private static void input() throws IOException{
         String [] input = br.readLine().split(" ");
@@ -28,18 +29,19 @@ public class Main {
             pairMap.put(arr[i], K-arr[i]);
             visit.put(arr[i], false);
             visit.put(K-arr[i], false);
+   
         }
         // System.out.println(cntMap);
         // System.out.println(pairMap);
-        for(int i = 0; i < N; i++){
-            if(visit.get(arr[i])) continue;
-            int pair = pairMap.get(arr[i]);
-            if(arr[i] == pair){
-                ans += cntMap.get(arr[i]) * (cntMap.get(arr[i])-1) / 2;
+        for(int num : cntMap.keySet()){
+            if(visit.get(num)) continue;
+            int pair = pairMap.get(num);
+            if(num == pair){
+                ans += cntMap.get(num) * (cntMap.get(num)-1) / 2;
             }else if(cntMap.containsKey(pair)){
-                ans += cntMap.get(arr[i]) * cntMap.get(pair);
+                ans += cntMap.get(num) * cntMap.get(pair);
             }
-            visit.put(arr[i], true);
+            visit.put(num, true);
             visit.put(pair, true);
         }
         System.out.println(ans);
