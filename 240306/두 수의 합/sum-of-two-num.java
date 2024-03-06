@@ -4,7 +4,7 @@ import java.io.*;
 public class Main {
     static int MAX = 100001;
     static HashMap<Integer, Boolean> visit = new HashMap<>();
-    static int [] arr = new int[MAX];
+    static int [] arr;
     static int N, K;
     static HashMap<Integer, Integer> cntMap = new HashMap<>();
     static HashMap<Integer, Integer> pairMap = new HashMap<>();
@@ -15,6 +15,7 @@ public class Main {
         String [] input = br.readLine().split(" ");
         N = Integer.parseInt(input[0]);
         K = Integer.parseInt(input[1]);
+        arr = new int[N];
         input = br.readLine().split(" ");
         for(int i = 0; i < N; i++){
             arr[i] = Integer.parseInt(input[i]);
@@ -28,9 +29,7 @@ public class Main {
     public static void main(String[] args) throws IOException{
         input();
         int ans = 0;
-   
-        // System.out.println(cntMap);
-        // System.out.println(pairMap);
+
         for(int num : cntMap.keySet()){
             if(visit.get(num)) continue;
             int pair = pairMap.get(num);
