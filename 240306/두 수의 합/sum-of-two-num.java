@@ -29,8 +29,8 @@ public class Main {
             visit.put(arr[i], false);
             visit.put(K-arr[i], false);
         }
-        System.out.println(cntMap);
-        System.out.println(pairMap);
+        // System.out.println(cntMap);
+        // System.out.println(pairMap);
         for(int i = 0; i < N; i++){
             if(visit.get(arr[i])) continue;
             int pair = pairMap.get(arr[i]);
