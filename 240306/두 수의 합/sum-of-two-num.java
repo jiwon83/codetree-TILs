@@ -35,7 +35,7 @@ public class Main {
             if(visit.get(arr[i])) continue;
             int pair = pairMap.get(arr[i]);
             if(arr[i] == pair){
-                ans += cntMap.get(arr[i]);
+                ans += cntMap.get(arr[i]) * (cntMap.get(arr[i])-1) / 2;
             }else if(cntMap.containsKey(pair)){
                 ans += cntMap.get(arr[i]) * cntMap.get(pair);
             }
