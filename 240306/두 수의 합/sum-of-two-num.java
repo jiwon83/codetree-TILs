@@ -18,19 +18,17 @@ public class Main {
         input = br.readLine().split(" ");
         for(int i = 0; i < N; i++){
             arr[i] = Integer.parseInt(input[i]);
+            cntMap.put(arr[i], cntMap.getOrDefault(arr[i], 0)+1);
+            pairMap.put(arr[i], K-arr[i]);
+            visit.put(arr[i], false);
+            visit.put(K-arr[i], false);
         }
 
     }
     public static void main(String[] args) throws IOException{
         input();
         int ans = 0;
-        for(int i = 0; i < N; i++){
-            cntMap.put(arr[i], cntMap.getOrDefault(arr[i], 0)+1);
-            pairMap.put(arr[i], K-arr[i]);
-            visit.put(arr[i], false);
-            visit.put(K-arr[i], false);
    
-        }
         // System.out.println(cntMap);
         // System.out.println(pairMap);
         for(int num : cntMap.keySet()){
