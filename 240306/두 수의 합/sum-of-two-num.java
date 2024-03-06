@@ -32,15 +32,15 @@ public class Main {
         // System.out.println(cntMap);
         // System.out.println(pairMap);
         for(int i = 0; i < N; i++){
-            if(visit.get(arr[i])) continue;
+            // if(visit.get(arr[i])) continue;
             int pair = pairMap.get(arr[i]);
             if(arr[i] == pair){
                 ans += cntMap.get(arr[i])/2;
             }else if(cntMap.containsKey(pair)){
                 ans += Math.min(cntMap.get(arr[i]), cntMap.get(pair));
             }
-            visit.put(arr[i], true);
-            visit.put(pair, true);
+            // visit.put(arr[i], true);
+            // visit.put(pair, true);
         }
         System.out.println(ans);
         
