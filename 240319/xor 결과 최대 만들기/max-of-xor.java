@@ -8,27 +8,27 @@ public class Main {
     static StringTokenizer st;
     private static int [] ch = new int[MAX_NUM];
     private static int [] arr = new int[MAX_NUM];
-    private static int ans;
+    private static int ans, N,M;
 
     public static void main(String[] args) throws IOException{
         // 여기에 코드를 작성해주세요.
         Main main = new Main();
         st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
         st = new StringTokenizer(br.readLine());
-        arr = new int[n];
-        ch = new int[n];
-        for(int i = 0; i < n; i++){
+ 
+        for(int i = 0; i < N; i++){
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        main.recur(0, n, m, 0);
+        main.recur(0, N, M, 0);
         System.out.println(ans);
         
     }
     
     private void recur(int k, int n, int m, int cnt){
+        // System.out.println("now "+ Arrays.toString(ch) + " cnt = "+ cnt);
         if(cnt == m){
             ans = Math.max(ans, calXOR(ch, arr));
             // System.out.println("complelte "+ Arrays.toString(ch));
@@ -37,15 +37,16 @@ public class Main {
             return;
         }
         
-        ch[k] = 0;
+        // ch[k] = 0;
         recur(k+1,n,m,cnt);
         ch[k] = 1;
         recur(k+1,n,m,cnt+1);
+        ch[k] = 0;
         
     }
     private int calXOR(int [] ch, int [] arr){
         int res = 0;
-        for(int i = 0; i < arr.length; i++ ){
+        for(int i = 1; i < arr.length; i++ ){
             if(ch[i]==1){
                 res = (res ^ arr[i]); 
             }
