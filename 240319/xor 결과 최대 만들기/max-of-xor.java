@@ -28,7 +28,7 @@ public class Main {
     }
     
     private void recur(int k, int n, int m, int cnt){
-        // System.out.println("now "+ Arrays.toString(ch) + " cnt = "+ cnt);
+        
         if(cnt == m){
             ans = Math.max(ans, calXOR(ch, arr));
             // System.out.println("complelte "+ Arrays.toString(ch));
@@ -39,6 +39,7 @@ public class Main {
         
         // ch[k] = 0;
         recur(k+1,n,m,cnt);
+
         ch[k] = 1;
         recur(k+1,n,m,cnt+1);
         ch[k] = 0;
@@ -46,7 +47,7 @@ public class Main {
     }
     private int calXOR(int [] ch, int [] arr){
         int res = 0;
-        for(int i = 1; i < arr.length; i++ ){
+        for(int i = 0; i < N; i++ ){
             if(ch[i]==1){
                 res = (res ^ arr[i]); 
             }
