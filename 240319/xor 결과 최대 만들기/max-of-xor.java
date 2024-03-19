@@ -29,11 +29,16 @@ public class Main {
     
     private void recur(int k, int n, int m, int cnt){
         
-        if(cnt == m){
-            ans = Math.max(ans, calXOR(ch, arr));
-            // System.out.println("complelte "+ Arrays.toString(ch));
-        }
+        // if(cnt == m){
+            
+        // }
         if(k==n){
+            if(cnt == m){
+                ans = Math.max(ans, calXOR(ch, arr));
+                // System.out.println("complelte "+ Arrays.toString(ch));
+                
+            }
+            
             return;
         }
         
