@@ -45,10 +45,10 @@ public class Main {
     }
     public static int sol(){
         if(coins.size() == 2 ) return -1;
-        recur(0);
+        recur(0, -1);
         return ans;
     }
-    public static void recur(int k){
+    public static void recur(int k, int pre){
         
         if(k == 3){
             // 해당 경로에 대해서 최소 이동거리 구하기
@@ -67,12 +67,12 @@ public class Main {
             return;
         }
         // 코인 선택
-        for(int i = 0; i < coins.size(); i++){
-            if(ch[i]==1) continue;
+        for(int i = pre+1; i < coins.size(); i++){
+            // if(ch[i]==1) continue;
             selected[k] = i;
-            ch[i] = 1;
-            recur(k+1);
-            ch[i] = 0;
+            // ch[i] = 1;
+            recur(k+1, i);
+            // ch[i] = 0;
         }
 
     }
