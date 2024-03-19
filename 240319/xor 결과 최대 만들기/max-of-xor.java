@@ -29,25 +29,20 @@ public class Main {
     
     private void recur(int k, int n, int m, int cnt){
         
-        // if(cnt == m){
-            
-        // }
-        if(k==n){
-            if(cnt == m){
-                ans = Math.max(ans, calXOR(ch, arr));
-                // System.out.println("complelte "+ Arrays.toString(ch));
-                
-            }
-            
+        if(cnt == m){
+            ans = Math.max(ans, calXOR(ch, arr));
+            return;
+        }
+        if(k==n){          
             return;
         }
         
-        ch[k] = 0;
+        // ch[k] = 0;
         recur(k+1,n,m,cnt);
 
         ch[k] = 1;
         recur(k+1,n,m,cnt+1);
-        // ch[k] = 0;
+        ch[k] = 0;
         
     }
     private int calXOR(int [] ch, int [] arr){
