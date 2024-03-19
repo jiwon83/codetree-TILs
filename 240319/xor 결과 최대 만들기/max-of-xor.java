@@ -37,12 +37,12 @@ public class Main {
             return;
         }
         
-        // ch[k] = 0;
+        ch[k] = 0;
         recur(k+1,n,m,cnt);
 
         ch[k] = 1;
         recur(k+1,n,m,cnt+1);
-        ch[k] = 0;
+        // ch[k] = 0;
         
     }
     private int calXOR(int [] ch, int [] arr){
