@@ -18,24 +18,22 @@ public class Main {
             if(!bumb()) break;
         }
         printMap();
-
-        // 여기에 코드를 작성해주세요.
     }
     private static boolean bumb(){
         boolean isBumb = false;
         int i = 0;
+
         for(; i < N;){
             if(map[i] == 0){
                 ++i;
                 continue;
             } 
             int j = i;
-            int cnt = 1;
-            while(j + 1 < N && (map[i] == map[j+1] || map[j+1] == 0)){
+            while(j + 1 < N && map[i] == map[j+1]){
                 ++j;
-                if(map[j] != 0) cnt++;
             }
-            
+
+            int cnt = j - i + 1;
             if(cnt >= M){
                 isBumb = true;
                 for(int z = i; z <=j; z++){
@@ -45,7 +43,19 @@ public class Main {
             i = j+1;
 
         }
+        down();
         return isBumb;
+
+    }
+    private static void down(){
+        // System.out.println("before === " + Arrays.toString(map));
+        int [] tmp = new int[N];
+        int idxTmpEnd = N-1;
+        for(int i = N-1; i >=0; i--){
+            if(map[i] != 0) tmp[idxTmpEnd--] = map[i];
+        }
+        map = tmp;
+        // System.out.println("after === " + Arrays.toString(map));
 
     }
     private static void printMap(){
