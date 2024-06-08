@@ -18,23 +18,26 @@ public class Main {
             st = new StringTokenizer(br.readLine());
             int from = toInt(st.nextToken());
             int to = toInt(st.nextToken());
-            remove(from, to, zenga);
+            remove(from, to);
         }
         printZenga();
     }
-    private static void remove(int from, int to, int [] arr){
+    private static void remove(int from, int to){
         int tmp[] = new int[N+1];
         int tmpIdx = 1;
         for(int i = 1; i <=N; i++){
             if(!isInArea(i, from, to) ){
-                tmp[tmpIdx++] = arr[i];
+                tmp[tmpIdx++] = zenga[i];
             }
         }
         // sout(Arrays.toString(tmp));
-        for(int i = 1; i <=N; i++){
-            arr[i] = tmp[i];
-        }
-        // arr = tmp.clone();
+        // for(int i = 1; i <=N; i++){
+        //     arr[i] = tmp[i];
+        // }
+        zenga = tmp.clone();/*
+        new arrrr[] = new ~;
+        arr = arrrr;
+        */
     }
     private static boolean isInArea(int i, int from, int to){
         return (from <= i && i <=to);
