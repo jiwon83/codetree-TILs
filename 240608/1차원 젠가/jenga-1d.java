@@ -34,7 +34,7 @@ public class Main {
         // for(int i = 1; i <=N; i++){
         //     arr[i] = tmp[i];
         // }
-        zenga = tmp.clone();/*
+        zenga = tmp;/*
         new arrrr[] = new ~;
         arr = arrrr;
         */
