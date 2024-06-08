@@ -1,15 +1,7 @@
 import java.util.*;
 import java.io.*;
 /*
-step 1: 
-Explodes Bomb continuous number (cnt >= M, standard = ROW)
-Gravitiy Down 
-
-steo 2:
-Rotate 90
-Gravitiy Down 
-
-return : cnt of left bombs
+틀린 이유 : 문제의 문장하나하나 꼼꼼히 보지 않고 로직을 가정했다. 
 */
 
 public class Main {
@@ -21,17 +13,13 @@ public class Main {
     static int [][] map;
 
     public static void main(String[] args) throws Exception{
-        // 여기에 코드를 작성해주세요.
         input();
         for(int k = 0; k < K; k++){
             while(explodes());
-            
             rotate90();
-            gravityDown();
         }
         while(explodes());
         printCnt();
-        // printMap();
     }
     static void input() throws Exception{
         st = new StringTokenizer(br.readLine());
@@ -45,7 +33,6 @@ public class Main {
                 map[i][j] = toInt(st.nextToken());
             }
         }
-
     }
     static void printCnt(){
         int cnt = 0;
@@ -56,52 +43,28 @@ public class Main {
         }
         System.out.println(cnt);
     }
-    static void printMap(){
-       
-        System.out.println("----------");
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                System.out.print(map[i][j]);
-                
-            }
-            System.out.println();
-        }
-
-        System.out.println("----------");
-    }
     // explode
     static boolean explodes(){
-        // System.out.println("explodes !");
-        // printMap();
-        // explodes sequential bombs
         boolean isExploded = false;
         for(int c = 0; c < N; c++){
             int i = 0;
-            for(;i < N;){
-                if(map[i][c] == 0) {
-                    i++;
-                    continue;
-                }
+            for(;i < N; i++){
+                if(map[i][c] == 0) continue;
                 int j = i;
-                while(j+1 < N && map[i][c] == map[j+1][c]){
-                    ++j;
-                }
+                while(j+1 < N && map[i][c] == map[j+1][c]) ++j;
                 int cnt = j - i +1;
                 if(cnt >= M){
                     isExploded = true;
                     for(int r = i; r <= j; r++) map[r][c] = 0;
                 }
-                i = j+1;
+                i = j;
             }
         }
         gravityDown();
         return isExploded;
-        // System.out.println("after !");
-        // printMap();
     }
     // rotate
     static void rotate90(){
-        // System.out.println("rotate90 !");
         int [][] tmp = new int[N][N];
         for(int i = 0; i < N; i++) tmp[i] = map[i].clone();
         for(int i = 0; i < N; i++){
@@ -112,8 +75,7 @@ public class Main {
             }
         }
         for(int i = 0; i < N; i++) map[i] = tmp[i].clone();
-        // System.out.println(" rotate90 after !");
-        // printMap();
+        gravityDown();
     }
 
     static void gravityDown(){
