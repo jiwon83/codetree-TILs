@@ -26,125 +26,67 @@ public class Main {
     }
 
     private static void practiceOne(char dir){
-        switch(dir){
-            case 'D':
-                for(int c = 0; c < N; c++){
-                    ArrayDeque<Integer> stack = new ArrayDeque<>();
-                    boolean isJustCombined = false;
-
-                    //1. 중력 후의 값을 stack에 저장
-                    for(int r = N-1; r >= 0; r--){
-                        int num = map[r][c];
-                        if(num == 0 ) continue;
-                        if(!stack.isEmpty() && !isJustCombined && num == stack.peekLast()){
-                            stack.pollLast();
-                            stack.addLast(num*2);
-                            isJustCombined = true;
-                        }else{
-                            stack.addLast(num);
-                            isJustCombined = false;
-                        }
-
-                    }
-                    // 2. stack을 map에 반영
-                    for(int r = N-1; r >=0; r--){
-                        if(!stack.isEmpty()){
-                            map[r][c] = stack.pollFirst();
-                        }else{
-                            map[r][c] = 0;
-                        }
-                    }
-                }
-            break;
-            case 'R':
-                for(int r = 0; r < N; r++){ 
-                    ArrayDeque<Integer> stack = new ArrayDeque<>();
-                    boolean isJustCombined = false;
-
-                    //1. 중력 후의 값을 stack에 저장
-                    for(int c = N-1; c >= 0; c--){
-                        int num = map[r][c];
-                        if(num == 0 ) continue;
-                        if(!stack.isEmpty() && !isJustCombined && num == stack.peekLast()){
-                            stack.pollLast();
-                            stack.addLast(num*2);
-                            isJustCombined = true;
-                        }else{
-                            stack.addLast(num);
-                            isJustCombined = false;
-                        }
-
-                    }
-                    // 2. stack을 map에 반영
-                    for(int c = N-1; c >= 0; c--){
-                        if(!stack.isEmpty()){
-                            map[r][c] = stack.pollFirst();
-                        }else{
-                            map[r][c] = 0;
-                        }
-                    }
-                }
-            break;
-            case 'U':
-                for(int c = 0; c < N; c++){ 
-                    ArrayDeque<Integer> stack = new ArrayDeque<>();
-                    boolean isJustCombined = false;
-
-                    //1. 중력 후의 값을 stack에 저장
-                    for(int r = 0; r < N; r++){
-                        int num = map[r][c];
-                        if(num == 0 ) continue;
-                        if(!stack.isEmpty() && !isJustCombined && num == stack.peekLast()){
-                            stack.pollLast();
-                            stack.addLast(num*2);
-                            isJustCombined = true;
-                        }else{
-                            stack.addLast(num);
-                            isJustCombined = false;
-                        }
-
-                    }
-                    // 2. stack을 map에 반영
-                    for(int r = 0; r < N; r++){
-                        if(!stack.isEmpty()){
-                            map[r][c] = stack.pollFirst();
-                        }else{
-                            map[r][c] = 0;
-                        }
-                    }
-                }
-            break;
-            case 'L':
-                for(int r = 0; r < N; r++){ 
-                    ArrayDeque<Integer> stack = new ArrayDeque<>();
-                    boolean isJustCombined = false;
-
-                    //1. 중력 후의 값을 stack에 저장
-                    for(int c = 0; c < N; c++){
-                        int num = map[r][c];
-                        if(num == 0 ) continue;
-                        if(!stack.isEmpty() && !isJustCombined && num == stack.peekLast()){
-                            stack.pollLast();
-                            stack.addLast(num*2);
-                            isJustCombined = true;
-                        }else{
-                            stack.addLast(num);
-                            isJustCombined = false;
-                        }
-
-                    }
-                    // 2. stack을 map에 반영
-                    for(int c = 0; c < N; c++){
-                        if(!stack.isEmpty()){
-                            map[r][c] = stack.pollFirst();
-                        }else{
-                            map[r][c] = 0;
-                        }
-                    }
-                }
-            break;
-        }
+        int totalRoateCnt = 4;
+        int preCnt = -1;
+        if(dir == 'D') preCnt = 0;
+        if(dir == 'R') preCnt = 1;
+        if(dir == 'U') preCnt = 2;
+        if(dir == 'L') preCnt = 3;
+        int afterCnt = totalRoateCnt - preCnt;
         
+        while(preCnt-- > 0) rotate();
+        do2048Down();
+        while(afterCnt-- > 0) rotate();
+
+    }
+
+    private static void rotate(){
+        int [][] tmp = new int[N][N];
+        for(int i = 0; i < N; i++){
+            tmp[i] = map[i].clone();
+        }
+
+        for(int r = 0; r < N; r++){
+            for(int c = 0; c < N; c++){
+                int nc = c;
+                int nr = N -1 - r;
+                tmp[nc][nr] = map[r][c];
+            }
+        }
+
+        for(int i = 0; i < N; i++){
+            map[i] = tmp[i];
+        }
+
+    }
+
+    private static void do2048Down(){
+        for(int c = 0; c < N; c++){
+            ArrayDeque<Integer> stack = new ArrayDeque<>();
+            boolean isJustCombined = false;
+
+            //1. 중력 후의 값을 stack에 저장
+            for(int r = N-1; r >= 0; r--){
+                int num = map[r][c];
+                if(num == 0 ) continue;
+                if(!stack.isEmpty() && !isJustCombined && num == stack.peekLast()){
+                    stack.pollLast();
+                    stack.addLast(num*2);
+                    isJustCombined = true;
+                }else{
+                    stack.addLast(num);
+                    isJustCombined = false;
+                }
+            }
+            // 2. stack을 map에 반영
+            for(int r = N-1; r >=0; r--){
+                if(!stack.isEmpty()){
+                    map[r][c] = stack.pollFirst();
+                }else{
+                    map[r][c] = 0;
+                }
+            }
+        }    
     }
     
     private static void printMap(){
