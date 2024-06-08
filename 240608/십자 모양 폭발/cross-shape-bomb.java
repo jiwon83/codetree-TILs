@@ -27,7 +27,7 @@ public class Main {
     }
     static int [][] dirs = {{-1,0}, {1,0}, {0,-1}, {0,1}};
     // bump baaaam!
-    private static void bump(int x, int y, int size){
+    private static void bomb(int x, int y, int size){
         map[x][y] = 0;
         for(int d = 0; d < 4; d++){
             for(int s =1; s < size; s++){
@@ -46,7 +46,7 @@ public class Main {
             int [] tmp = new int[N+1];
             int endTmpIdx = N;
             for(int r = N; r > 0; r--){
-                if( map[r][c] != 0 ){
+                if( map[r][c] > 0 ){
                     tmp[endTmpIdx--] = map[r][c];
                 }
             }
