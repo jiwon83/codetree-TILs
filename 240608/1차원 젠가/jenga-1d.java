@@ -30,33 +30,15 @@ public class Main {
                 tmp[tmpIdx++] = zenga[i];
             }
         }
-        // sout(Arrays.toString(tmp));
-        // for(int i = 1; i <=N; i++){
-        //     arr[i] = tmp[i];
-        // }
-        zenga = tmp;/*
-        new arrrr[] = new ~;
-        arr = arrrr;
-        */
+        zenga = tmp;
     }
+
     private static boolean isInArea(int i, int from, int to){
         return (from <= i && i <=to);
     }
-    private static void printZenga(){
-        StringBuilder sb = new StringBuilder();
-        for(int i = 1; i <=N; i++){
-            if(zenga[i] != 0) {
-                blockCnt++;
-                sb.append(zenga[i]).append("\n");
-            }
-        }
-        System.out.println(blockCnt);
-        System.out.println(sb);
-    }
+    
     private static int toInt(String s){
         return Integer.parseInt(s);
     }
-    private static void sout(String s){
-        System.out.println(s);
-    }
+    
 }
