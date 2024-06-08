@@ -24,12 +24,14 @@ public class Main {
         // 여기에 코드를 작성해주세요.
         input();
         for(int k = 0; k < K; k++){
-           
             explodes();
+            gravityDown();
             rotate90();
+            gravityDown();
         }
-        explodes();
+        while(explodes());
         printCnt();
+        // printMap();
     }
     static void input() throws Exception{
         st = new StringTokenizer(br.readLine());
@@ -68,10 +70,11 @@ public class Main {
         System.out.println("----------");
     }
     // explode
-    static void explodes(){
+    static boolean explodes(){
         // System.out.println("explodes !");
         // printMap();
         // explodes sequential bombs
+        boolean isExploded = false;
         for(int c = 0; c < N; c++){
             int i = 0;
             for(;i < N;){
@@ -85,12 +88,13 @@ public class Main {
                 }
                 int cnt = j - i +1;
                 if(cnt >= M){
+                    isExploded = true;
                     for(int r = i; r <= j; r++) map[r][c] = 0;
                 }
                 i = j+1;
             }
         }
-        gravityDown();
+        return isExploded;
         // System.out.println("after !");
         // printMap();
     }
@@ -107,7 +111,6 @@ public class Main {
             }
         }
         for(int i = 0; i < N; i++) map[i] = tmp[i].clone();
-        gravityDown();
         // System.out.println(" rotate90 after !");
         // printMap();
     }
