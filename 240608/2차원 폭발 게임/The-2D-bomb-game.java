@@ -24,10 +24,12 @@ public class Main {
         // 여기에 코드를 작성해주세요.
         input();
         for(int k = 0; k < K; k++){
-            step1();
-            step2();
+           
+            explodes();
+            rotate90();
         }
-        printMap();
+        explodes();
+        printCnt();
     }
     static void input() throws Exception{
         st = new StringTokenizer(br.readLine());
@@ -43,20 +45,32 @@ public class Main {
         }
 
     }
-    static void printMap(){
+    static void printCnt(){
         int cnt = 0;
         for(int i = 0; i < N; i++){
             for(int j = 0; j < N; j++){
                 if(map[i][j] > 0) cnt++;
-                sb.append(map[i][j]).append(" ");
             }
-            sb.append("\n");
         }
         System.out.println(cnt);
-        // System.out.println(sb);
+    }
+    static void printMap(){
+       
+        System.out.println("----------");
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < N; j++){
+                System.out.print(map[i][j]);
+                
+            }
+            System.out.println();
+        }
+
+        System.out.println("----------");
     }
     // explode
-    static void step1(){
+    static void explodes(){
+        // System.out.println("explodes !");
+        // printMap();
         // explodes sequential bombs
         for(int c = 0; c < N; c++){
             int i = 0;
@@ -77,9 +91,12 @@ public class Main {
             }
         }
         gravityDown();
+        // System.out.println("after !");
+        // printMap();
     }
     // rotate
-    static void step2(){
+    static void rotate90(){
+        // System.out.println("rotate90 !");
         int [][] tmp = new int[N][N];
         for(int i = 0; i < N; i++) tmp[i] = map[i].clone();
         for(int i = 0; i < N; i++){
@@ -91,11 +108,13 @@ public class Main {
         }
         for(int i = 0; i < N; i++) map[i] = tmp[i].clone();
         gravityDown();
+        // System.out.println(" rotate90 after !");
+        // printMap();
     }
 
     static void gravityDown(){
         for(int c = 0; c < N; c++){
-            int [] tmp = new int [N];
+            int [] tmp = new int[N];
             int endOfTmp = N-1;
             for(int r = N-1; r >= 0; r--){
                 if(map[r][c] > 0) tmp[endOfTmp--] = map[r][c];
