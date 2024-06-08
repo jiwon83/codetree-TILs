@@ -24,7 +24,7 @@ public class Main {
         // 여기에 코드를 작성해주세요.
         input();
         for(int k = 0; k < K; k++){
-            explodes();
+            while(explodes());
             gravityDown();
             rotate90();
             gravityDown();
