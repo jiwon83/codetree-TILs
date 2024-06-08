@@ -20,13 +20,13 @@ public class Main {
         st = new StringTokenizer(br.readLine());
         int x = toInt(st.nextToken());
         int y = toInt(st.nextToken());
-        bump(x, y, map[x][y]);
+        bomb(x, y, map[x][y]);
         down(map);
         printMap();
 
     }
     static int [][] dirs = {{-1,0}, {1,0}, {0,-1}, {0,1}};
-    // bump baaaam!
+    // bomb baaaam!
     private static void bomb(int x, int y, int size){
         map[x][y] = 0;
         for(int d = 0; d < 4; d++){
