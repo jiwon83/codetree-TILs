@@ -48,9 +48,9 @@ public class Main {
     static int collect(){
         // System.out.println(" =====collect ======= ");
         int x=-1; int y=-1; int maxVal = 0; int angle = -1;
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                if(impossible3by3(i, j)) continue;
+        for(int i = 1; i < N-1; i++){
+            for(int j = 1; j < N-1; j++){
+                // if(impossible3by3(i, j)) continue;
                 int [][] tmp = new int[N][N];
                 for(int a = 1; a <= 3; a++){
                     tmp = rotate(i, j, a, map);
