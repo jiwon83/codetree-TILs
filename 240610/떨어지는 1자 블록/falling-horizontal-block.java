@@ -9,26 +9,29 @@ public class Main {
     static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws Exception{
-        // 여기에 코드를 작성해주세요.
         input();
         pro();
         printArr(map, sb);
     }
+    
     static void pro() {
-        // printArr(map);
-        int setRow = N;
-        Loop: for(int r = 1; r < N; r++){
-            for(int c = K; c < K+M; c++){
-                if(map[r+1][c]== 1){
-                    setRow = r;
-                    break Loop;
-                }
+        int targetRow = N;
+        for(int r = 1; r < N; r++){
+            if(hasBlockinRow(map, r+1, K, K+M-1)){
+                targetRow = r;
+                break;
             }
         }
-        // System.out.println("setRow = "+ setRow);
-        for(int c = K; c <=K+M-1; c++){
-            map[setRow][c] = 1;
+        for(int c = K; c <=K+M-1; c++) map[targetRow][c] = 1;
+    }
+
+    static boolean hasBlockinRow(int [][] map, int r, int from, int to){
+        for(int c = from; c <= to; c++){
+            if(map[r][c]== 1){
+                return true;
+            } 
         }
+        return false;
     }
 
     static void input() throws Exception{
@@ -59,7 +62,17 @@ public class Main {
         }
         System.out.println(sb);
     }
+    static void printArr(int [][] arr, String msg){
+        System.out.println("----- "+ msg+" ------");
+        for(int i = 0; i < arr.length; i++){
+            System.out.println(Arrays.toString(arr[i]));
+        }
+        System.out.println("----------------");
+    }
     static int toInt(String s){
         return Integer.parseInt(s);
+    }
+    static void sout(String s){
+        System.out.println(s);
     }
 }
