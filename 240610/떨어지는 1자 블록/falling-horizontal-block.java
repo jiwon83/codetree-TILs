@@ -17,7 +17,7 @@ public class Main {
     static void pro() {
         // printArr(map);
         int setRow = N;
-        Loop: for(int r = 1; r <= N; r++){
+        Loop: for(int r = 1; r < N; r++){
             for(int c = K; c < K+M; c++){
                 if(map[r+1][c]== 1){
                     setRow = r;
