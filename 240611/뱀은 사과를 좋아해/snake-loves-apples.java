@@ -82,6 +82,7 @@ public class Main {
         Iterator<Point> iter = q.iterator();
         while(iter.hasNext()){
             Point next = iter.next();
+            if(!iter.hasNext()) return false;
             if(next.x == p.x && next.y == p.y) return true;
         }
         return false; 
