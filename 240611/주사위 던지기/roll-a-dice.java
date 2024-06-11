@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+import java.awt.*;
 public class Main {
 
     static int N, M, nowR, nowC; // M은 횟수
@@ -43,7 +44,7 @@ public class Main {
         }
         if(cmd == 'R'){
             r += dirs[1][0];
-            nextC = c + dirs[1][1];
+            c += dirs[1][1];
         }
         if(cmd == 'U'){
             r += dirs[2][0];
@@ -53,6 +54,7 @@ public class Main {
             r += dirs[3][0];
             c += dirs[3][1];
         }
+        return new Point(r, c);
     }
     static boolean nextIsOutOfArea(char cmd, int r, int c){
         Point nextP = getNextPos(cmd, r, c);
@@ -86,6 +88,7 @@ public class Main {
             newCube[1] = 7-cube[2];
             newCube[2] = cube[1];
         }
+        return newCube;
     }
  
     static int toInt(String s){
