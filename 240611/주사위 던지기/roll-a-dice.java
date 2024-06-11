@@ -17,7 +17,7 @@ public class Main {
         map = new int[N+1][N+1];
         nowR = toInt(st.nextToken());
         nowC = toInt(st.nextToken());
-        map[nowR][nowC] = cube[1];
+        map[nowR][nowC] = 7 - cube[1];
 
         st = new StringTokenizer(br.readLine());
         for(int i = 0; i < M; i++){
@@ -25,7 +25,6 @@ public class Main {
             if(nextIsOutOfArea(cmd, nowR, nowC)) continue;
             doGame(cmd);
         }
-        // printArr(map, "map");
         sout(getSumOfNumbers(map)+"");  
     }
     static int getSumOfNumbers(int [][] map){
@@ -67,7 +66,9 @@ public class Main {
     static void doGame(char cmd){
         Point nextPos =getNextPos(cmd, nowR, nowC);
         cube = moveCube(cmd, cube);  // 주사위를 굴리고
-        map[nowR][nowC] = cube[1]; // 바닥면을 세긴다.
+        nowR = nextPos.x;
+        nowC = nextPos.y;
+        map[nowR][nowC] = 7-cube[1]; // 바닥면을 세긴다.
 
     }
     static int [] moveCube(char cmd, int [] cube){
@@ -82,7 +83,7 @@ public class Main {
         }
         if(cmd == 'L'){
             newCube[1] = cube[2];
-            newCube[2] = 7-cube[0];
+            newCube[2] = 7-cube[1];
         }
         if(cmd == 'R'){
             newCube[1] = 7-cube[2];
