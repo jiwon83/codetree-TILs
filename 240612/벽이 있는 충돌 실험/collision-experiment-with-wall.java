@@ -52,7 +52,7 @@ public class Main {
                 // System.out.println(" 횟수 = "+ i);
                 // printMarbleMap();
             }
-            sb.append(getCount(marbleMap)).append(" ");
+            sb.append(getCount(marbleMap)).append("\n");
             
         }
         System.out.println(sb);
