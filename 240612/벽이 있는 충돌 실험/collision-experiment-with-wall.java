@@ -115,9 +115,9 @@ public class Main {
     }
     static int toDirNum(String s){
         if(s.charAt(0) == 'U') return 0;
-        if(s.charAt(0) == 'D') return 1;
-        if(s.charAt(0) == 'R') return 2;
-        if(s.charAt(0) == 'L') return 3;
+        if(s.charAt(0) == 'D') return 3;
+        if(s.charAt(0) == 'R') return 1;
+        if(s.charAt(0) == 'L') return 2;
         return -1;
     }
 
