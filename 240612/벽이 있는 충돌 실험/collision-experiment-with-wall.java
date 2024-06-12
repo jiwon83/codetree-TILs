@@ -20,7 +20,7 @@ public class Main {
     static int MAX_TIME;
     static StringBuilder sb = new StringBuilder();
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static int [][] dirs = {{-1,0}, {1,0}, {0,1}, {0,-1}}; // up, down, right, left
+    static int [][] dirs = {{-1,0}, {0,1}, {0,-1}, {1,0}}; // up, down, right, left
     static StringTokenizer st;
 
     public static void main(String[] args) throws Exception{
@@ -111,8 +111,7 @@ public class Main {
         return r > 0 && c > 0 && r <=N && c <=N;
     }
     static int revDir(int dir){
-        if(dir % 2 == 0) return dir + 1;
-        return dir -1;
+        return 3 - dir;
     }
     static int toDirNum(String s){
         if(s.charAt(0) == 'U') return 0;
