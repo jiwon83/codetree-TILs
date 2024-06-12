@@ -80,11 +80,17 @@ public class Main {
             }
 
             // process
-            lastTime = 0; 
-            boolean isCrashed = false;
-            do{
-                isCrashed = doProcess(N, lastTime);
-            }while(isCrashed);
+            lastTime = 0;
+            int time = 0;
+            for(int s = -1000; s <= 1000; s++){
+                doProcess(N, time);
+                time += 2;
+            }
+
+            // boolean isCrashed = false;
+            // do{
+            //     isCrashed = doProcess(N, lastTime);
+            // }while(isCrashed);
             if(lastTime == 0) lastTime = -1;
             sb.append(lastTime).append("\n");
         }
