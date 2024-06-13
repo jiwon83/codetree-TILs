@@ -1,22 +1,10 @@
 import java.util.*;
 import java.io.*;
 
-/**
- * Variables
- * Person = 기사
- *
- * Methods
- * 전체 process 함수 -> process()
- * 기사의 이동(기사 번호, 방향)
- * 연쇄적 이동(시작 기사 번호) -> interact()
- * 비연쇄적 이동(시작 기사 번호) -> noInteract()
- * 기사가 이동하려는 방향의 끝에 벽이 있는 지 여부(시작 기사 번호) -> canMove()
- */
 public class Main {
    static class Person{
       int num, r, c, h, w, k, damage; // k = 체력
       boolean isDead;
-
       public Person(int num, int r, int c, int h, int w, int k){
          this.num = num;
          this.r = r;
@@ -27,19 +15,17 @@ public class Main {
          this.damage = 0;
          this.isDead = false;
       }
-
-      public String toString(){
-         return num + "번 기사: ("+ r+ " , "+ c + ") "+ h+ " * " + w + " k = "
-                 + k + " isDead="+ isDead + " damage="+ damage;
+      public void move(int dir){
+         this.r += dirs[dir][0];
+         this.c += dirs[dir][1];
       }
-
    }
    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
    static StringTokenizer st;
    static int L, N, Q;
    static int [][] map; // 맵 정보
    static int [][] mapPersonNum; // 기사들의 번호 정보
-   static HashMap<Integer, Person> personHMap = new HashMap<>();
+   static HashMap<Integer, Person> personHMap = new HashMap<>(); // 기사들의 해쉬맵 정보
    static int [][] dirs = {{-1,0}, {0,1}, {1,0}, {0, -1}}; // up, right, down, left
 
    public static void main(String[] args) throws Exception{
@@ -88,53 +74,39 @@ public class Main {
       sout(sum+"");
    }
 
+   // 시간복잡도 O(맵의 크기)
    static void process(int num, int dir){
-      if(canMove(num, dir, map)){
+      if(canMove(num, dir, map)){ 
          if(exitsPersonNextPos(num, dir, mapPersonNum)){ // 다른 기사 존재
             mapPersonNum = interact(num, dir); // 연쇄적 작용
          }else{
-            mapPersonNum = noInteract(num, dir);
+            mapPersonNum = noInteract(num, dir); // 특정 기사만 이동
          }
       }
    }
-   // 해당 기사만 이동함
+
    static int [][] noInteract(int personNum, int dir){
-      int tmp[][] = new int[L+1][L+1];
-      
       //타겟 기사의 위치를 이동시키고
       Person targetPerson = personHMap.get(personNum);
-      targetPerson.r += dirs[dir][0];
-      targetPerson.c += dirs[dir][1];
-      
-      // map을 다시 그린다
-      for (int num = 1; num <=N; num++){
-         Person person = personHMap.get(num);
-         if(person.isDead) continue;
-         markPersonInMap(person, tmp);
-      }
-      return tmp;
-   }
+      targetPerson.move(dir);
 
-   // 연쇄적으로 밀려남
+      // 전체 맵을 다시 그린다
+      return initMapByPeople(personHMap);
+   }
+   
    static int[][] interact(int startPersonNum, int dir){
       int [][] tmp = new int [L+1][L+1];
-      
+
       // 1. 움직여야하는 기사 리스트를 받는다.
       List<Integer> haveToMovePeople = getHaveToMove(startPersonNum, dir);
 
       // 2. 움직인다.
-      //.clone();
       for (int num : haveToMovePeople){
-         Person person = personHMap.get(num);
-         person.r += dirs[dir][0];
-         person.c += dirs[dir][1];
+         personHMap.get(num).move(dir);
       }
-      // 3. 모든 기사들에 대해 tmp[][] 배열에 위치를 작성
-      for (int num = 1; num <=N; num ++){
-         Person person = personHMap.get(num);
-         if( person.isDead) continue;
-         markPersonInMap(person, tmp);
-      }
+      
+      // 3. 모든 기사들에 대해 배열 초기화
+      mapPersonNum = initMapByPeople(personHMap);
 
       // 3. 밀려난 모든 기사들의 피해를 발생 시킨다.
       for (int num : haveToMovePeople){
@@ -154,6 +126,18 @@ public class Main {
             person.isDead = true;
             remarkPersonInMapPersonNum(person,tmp);
          }
+      }
+      return tmp;
+   }
+
+   /////////////////// 여기서부터는 Util 및 내부 함수 ///////////////
+
+   static int [][] initMapByPeople(HashMap<Integer, Person> personHMap){
+      int tmp[][] = new int[L+1][L+1];
+      for (int num = 1; num <=N; num++){
+         Person person = personHMap.get(num);
+         if(person.isDead) continue;
+         markPersonInMap(person, tmp);
       }
       return tmp;
    }
@@ -213,11 +197,10 @@ public class Main {
       }
       return true;
    }
-   //BFS 탐색: 특정 방향으로 인접한 모든 다른 기사를 탐색한다.
+
    static boolean exitsPersonNextPos(int personNum, int dir, int [][] mapPersonNum){
       Person person = personHMap.get(personNum);
 
-      //연쇄적으로 밀리게되는 모든 기사의 모든 영역을 탐색한다.
       int endR = person.r + person.h - 1;
       int endC = person.c + person.w - 1;
       for(int r = person.r; r <= endR; r++){
