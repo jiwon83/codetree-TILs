@@ -113,6 +113,7 @@ public class Main {
         // santa를 해당 위치에 착지 시킨다
         if(!inArea(r, c)){
             santaFail(santa);
+            return;
         }
         if(santaNumMap[r][c] > 0){
             int num = santaNumMap[r][c];
