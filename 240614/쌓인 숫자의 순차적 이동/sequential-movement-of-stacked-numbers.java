@@ -1,127 +1,135 @@
-import java.util.Scanner;
-import java.util.ArrayList;
-
-class Pair { 
-    int x, y;
-    public Pair(int x, int y) { 
-        this.x = x; 
-        this.y = y; 
-    } 
-}
-
+import java.util.*;
+import java.io.*;
+import java.awt.*;
 public class Main {
-    public static final Pair OUT_OF_GRID = new Pair(-1, -1);
-    public static final int DIR_NUM = 8;
-    public static final int MAX_N = 20;
-    
-    public static int n, m;
-    public static ArrayList<Integer>[][] grid = new ArrayList[MAX_N][MAX_N];
-    
-    public static Pair GetPos(int num) {
-        for(int i = 0; i < n; i++)
-            for(int j = 0; j < n; j++)
-                for(int k = 0; k < (int) grid[i][j].size(); k++)
-                    if(grid[i][j].get(k) == num)
-                        return new Pair(i, j);
-        
-        return new Pair(0, 0);
-    }
-    
-    public static boolean inRange(int x, int y) {
-        return 0 <= x && x < n && 0 <= y && y < n;
-    }
-    
-    // 그 다음 위치를 찾아 반환합니다.
-    public static Pair NextPos(Pair pos) {
-        int[] dx = new int[]{-1, -1, -1, 0, 0, 1, 1, 1};
-        int[] dy = new int[]{-1, 0, 1, -1, 1, -1, 0, 1};
-        
-        int x = pos.x;
-        int y = pos.y;
-        
-        // 인접한 8개의 칸 중 가장 값이 큰 위치를 찾아 반환합니다.
-        int maxVal = -1;
-        Pair maxPos = OUT_OF_GRID;
-        for(int i = 0; i < 8; i++) {
-            int nx = x + dx[i], ny = y + dy[i];
-            if(inRange(nx, ny)) {
-                for(int j = 0; j < (int) grid[nx][ny].size(); j++) {
-                    if(grid[nx][ny].get(j) > maxVal) {
-                        maxVal = grid[nx][ny].get(j);
-                        maxPos = new Pair(nx, ny);
-                    }
-                }
-            }
-        }
-        
-        return maxPos;
-    }
-    
-    public static void move(Pair pos, Pair nextPos, int moveNum) {
-        int x = pos.x;
-        int y = pos.y;
-        
-        int nx = nextPos.x;
-        int ny = nextPos.y;
-        
-        // Step1. (x, y) 위치에 있던 숫자들 중
-        // moveNum 위에 있는 숫자들을 전부 옆 위치로 옮겨줍니다.
-        boolean toMove = false;
-        for(int i = 0; i < (int) grid[x][y].size(); i++) {
-            if(grid[x][y].get(i) == moveNum)
-                toMove = true;
-            
-            if(toMove)
-                grid[nx][ny].add(grid[x][y].get(i));
-        }
-        
-        // Step2. (x, y) 위치에 있던 숫자들 중
-        // 움직인 숫자들을 전부 비워줍니다.
-        while(grid[x][y].get(grid[x][y].size() - 1) != moveNum)
-            grid[x][y].remove(grid[x][y].size() - 1);
-        grid[x][y].remove(grid[x][y].size() - 1);
-    }
-    
-    public static void simulate(int moveNum) {
-        // 그 다음으로 나아가야할 위치를 구해
-        // 해당 위치로 숫자들을 옮겨줍니다.
-        Pair pos = GetPos(moveNum);
-        Pair nextPos = NextPos(pos);
-        if(nextPos != OUT_OF_GRID)
-            move(pos, nextPos, moveNum);
-    }
+   static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+   static StringTokenizer st;
+   static int N, M;
+   static ArrayDeque<Integer> [][] map;
+   static HashMap<Integer, Point> hm = new HashMap<>();
+   static int [][] dirs = {{-1, -1}, {-1, 1}, {1, -1}, {1, 1}, {1, 0}, {-1,0}, {0,1}, {0,-1}};
+   public static void main(String[] args) throws Exception{
+      st = new StringTokenizer(br.readLine());
+      N = Integer.parseInt(st.nextToken());
+      M = Integer.parseInt(st.nextToken());
+      map = new ArrayDeque [N+1][N+1];
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
-        m = sc.nextInt();
+      for(int i = 1; i <= N; i++){
+         st = new StringTokenizer(br.readLine());
+         for(int j = 1; j <=N; j++){
+            int num = Integer.parseInt(st.nextToken());
+            hm.put(num, new Point(i, j));
+            map[i][j] = new ArrayDeque<>();
+            map[i][j].addLast(num);
+         }
+      }
+      st = new StringTokenizer(br.readLine());
+      for(int i = 0; i <M; i++){
+         int num = Integer.parseInt(st.nextToken());
+         move(num);
+      }
+      printMap(map);
+   }
+   static void printMap(ArrayDeque<Integer> [][] map){
+      StringBuilder sb = new StringBuilder();
+      for(int i = 1; i <= N; i++){
+         for(int j = 1; j <=N; j++){
+            if(map[i][j].isEmpty()) sb.append("None");
+            while(!map[i][j].isEmpty()){
+               sb.append(map[i][j].pollLast()).append(" ");
+            }
+            sb.append("\n");
+         }
 
-        for(int i = 0; i < n; i++)
-            for(int j = 0; j < n; j++)
-                grid[i][j] = new ArrayList<>();
-            
-        for(int i = 0; i < n; i++)
-            for(int j = 0; j < n; j++) {
-                int num = sc.nextInt(); 
-                grid[i][j].add(num);
-            }
-        
-        // m번 시뮬레이션을 진행합니다.
-        while(m-- > 0) {
-            int moveNum = sc.nextInt();
-            simulate(moveNum);
-        }
-        
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < n; j++) {
-                if((int) grid[i][j].size() == 0)
-                    System.out.print("None");
-                else {
-                    for(int k = (int) grid[i][j].size() - 1; k >= 0; k--)
-                        System.out.print(grid[i][j].get(k) + " ");
-                }
-                System.out.println();
-            }
-        }
-    }
+      }
+      System.out.println(sb);
+   }
+
+   static void printMap(ArrayDeque<Integer> [][] map, String msg){
+      System.out.println(" ==== "+ msg + " =====");
+      for(int i = 1; i <= N; i++){
+         for(int j = 1; j <=N; j++){
+            System.out.print(map[i][j] + " ");
+         }
+         System.out.println();
+      }
+      System.out.println(" =================== ");
+   }
+   static void move(int num){
+
+      Point pos = hm.get(num);
+      int maxPosDir = -1, maxNum = -1, targetX = -1, targetY = -1;
+
+      for(int d = 0; d < 8; d++){
+         int nx = pos.x + dirs[d][0];
+         int ny = pos.y + dirs[d][1];
+         if( !inArea(nx, ny)) continue;
+
+         // 해당 위치 가장 큰 숫자 확인
+         ArrayDeque<Integer> queue = map[nx][ny];
+         int nowMaxNum = getMaxNumInQueue(queue);
+         if( nowMaxNum > maxNum){
+            maxPosDir = d;
+            maxNum = nowMaxNum;
+            targetX = nx;
+            targetY = ny;
+         }
+      }
+
+      // System.out.println(" 목적 위치 "+ targetX + " , " + targetY + " 찾은 숫자 : "+ maxNum);
+
+      // printMap(map, "before");
+      // 숫자를 옮긴다.
+      if(maxNum != -1){
+         // 숫자위의 것까지 가져와서
+
+         move(num, pos.x, pos.y, targetX, targetY, map);
+         // ArrayDeque<Integer> willMoveQ = getAndRemoveNumsQ(num, pos.x, pos.y, map);
+         // // 목적지의 맨위에 옮긴다.
+         // while(!willMoveQ.isEmpty()){
+         //     int number = willMoveQ.pollFirst();
+         //     map[targetX][targetY].addLast(number);
+         //     hm.put(number, new Point(targetX, targetY));
+         // }
+
+      }
+
+      // printMap(map, "after");
+   }
+   static void move(int number, int fromR, int fromC, int toR, int toC, ArrayDeque<Integer>[][] map){
+      ArrayDeque<Integer> fromDeque = map[fromR][fromC];
+      ArrayDeque<Integer> toDeque = map[toR][toC];
+      ArrayDeque<Integer> tmpDeque = new ArrayDeque<>();
+
+      while(!fromDeque.isEmpty() && fromDeque.peekLast() != number){
+         tmpDeque.addLast(fromDeque.pollLast());
+      }
+      tmpDeque.addLast(fromDeque.pollLast());
+
+      while(!tmpDeque.isEmpty()){
+         int movingNum = tmpDeque.pollFirst();
+         toDeque.addLast(movingNum);
+         hm.put(movingNum, new Point(toR, toC));
+      }
+   }
+   static ArrayDeque<Integer> getAndRemoveNumsQ(int num, int r, int c, ArrayDeque<Integer> [][] map){
+      ArrayDeque<Integer> result = new ArrayDeque<>();
+      ArrayDeque<Integer> q = map[r][c];
+      while(q.peekLast() != num){
+         result.addFirst(q.pollLast());
+      }
+      result.addFirst(q.pollLast());
+      return result;
+   }
+   static int getMaxNumInQueue(ArrayDeque<Integer> queue){
+      Iterator<Integer> iter = queue.iterator();
+      int maxNum = -1;
+      while(iter.hasNext()){
+         maxNum = Math.max(maxNum, iter.next());
+      }
+      return maxNum;
+   }
+   static boolean inArea(int r, int c){
+      return r > 0 && c > 0 && r <= N && c <=N;
+   }
 }
