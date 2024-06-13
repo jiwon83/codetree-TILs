@@ -5,22 +5,14 @@ import java.io.*;
  * 전체 시간복잡도 ( M * L * L )
  *
  * 이 문제에서 유의할 점
- * 연쇄적으로 밀리는 함수를 구현할 때, 이동하려는 방향의 끝에 벽이 있다면 모든 기사는 이동할 수 없게 된다에 유의
- * -> 이 부분을 BFS로 구현하기 위해 int [][] 배열에 기사의 전체 영역에 대해 표시했다.
+ * 연쇄적으로 밀리는 함수를 구현할 때, 이동하려는 방향의 끝에 벽이 있다면 모든 기사는 이동할 수 없게 된다
+ * -> 이 부분을 BFS로 구현하기 위해 int [][] 배열에 기사의 영역에 대해 표시했다.
  * -> 또한, 명령이 기사의 번호로 주어지고, 죽음 여부를 빠르게 확인하게 할 수 있도록 HashMap으로 관리했다.
  * -> 명령을 받은 기사는 피해를 입지 않는 것에 유의
- * -> 밀린 이후에 대미지를 입게되는 구현의 경우는 밀리는 와중에 구현해도 상관은 없을 듯?
- *
  *
  * Variables 참고
  * Person = 기사
  *
- * Methods
- * 전체 process 함수 -> process()
- * 기사의 이동(기사 번호, 방향)
- * 연쇄적 이동(시작 기사 번호) -> interact()
- * 비연쇄적 이동(시작 기사 번호) -> noInteract()
- * 기사가 이동하려는 방향의 끝에 벽이 있는 지 여부(시작 기사 번호) -> canMove()
  */
 public class Main {
    static class Person{
@@ -81,7 +73,7 @@ public class Main {
          int personNum = Integer.parseInt(st.nextToken());
          int dir = Integer.parseInt(st.nextToken());
          if( personHMap.get(personNum).isDead ) continue; // 사라진 기사에 대한 명령에는 아무런 반응도 없다.
-         process(personNum, dir); //기사의 이동
+         sol(personNum, dir);
       }
       // 생존한 기사들의 총 damage 합 출력
       printTotalDamageALive();
@@ -95,29 +87,24 @@ public class Main {
       sout(sum+"");
    }
 
-   // 시간복잡도 O(맵의 크기)
-   static void process(int num, int dir){
-      if(canMove(num, dir, map)){
-
-         mapPersonNum = move(num, dir);
-//         if(exitsPersonNextPos(num, dir, mapPersonNum)){ // 다른 기사 존재
-//            mapPersonNum = interact(num, dir); // 연쇄적 작용
-//         }else{
-//            mapPersonNum = noInteract(num, dir); // 특정 기사만 이동
-//         }
+   // 시간복잡도 O(맵의 크기^2)
+   static void sol(int personNum, int dir){
+      if(canMove(personNum, dir, map)){
+         mapPersonNum = move(personNum, dir);
       }
    }
    static int [][] move(int startPersonNum, int dir){
-      // 옆에 다른 기사가 존재하면 연쇄작용
-      
-      // 기사의 이동
+
+      // 이동해야하는 기사들의 목록
       List<Integer> haveToMovePeople = getHaveToMove(startPersonNum, dir);
-      
+
+      // 이동
       for (int num : haveToMovePeople){
          Person person = personHMap.get(num);
          person.move(dir);
       }
 
+      // 데미지 측정
       for (int num : haveToMovePeople){
          Person person = personHMap.get(num);
          if(person.num == startPersonNum) continue;
@@ -138,51 +125,8 @@ public class Main {
 
       //모든 기사들에 대해 배열 초기화
       return initMapByPeople(personHMap);
-      
-   }
 
-//   static int [][] noInteract(int personNum, int dir){
-//      //타겟 기사의 위치를 이동시키고
-//      Person targetPerson = personHMap.get(personNum);
-//      targetPerson.move(dir);
-//
-//      // 전체 맵을 다시 그린다
-//      return initMapByPeople(personHMap);
-//   }
-//   
-//   static int[][] interact(int startPersonNum, int dir){
-//
-//      // 1. 움직여야하는 기사 리스트를 받는다.
-//      List<Integer> haveToMovePeople = getHaveToMove(startPersonNum, dir);
-//
-//      // 2. 움직인다.
-//      for (int num : haveToMovePeople){
-//         Person person = personHMap.get(num);
-//         person.move(dir);
-//      }
-//
-//      // 3. 밀려난 모든 기사들의 피해를 발생 시킨다.
-//      for (int num : haveToMovePeople){
-//         Person person = personHMap.get(num);
-//         if(person.num == startPersonNum) continue;
-//         int willDamage = 0;
-//         int endR = person.r + person.h - 1;
-//         int endC = person.c + person.w - 1;
-//         for(int i = person.r; i <= endR; i++){
-//            for(int j = person.c; j <=endC; j++){
-//               if(map[i][j]  == 1 ) willDamage += 1;
-//            }
-//         }
-//         person.damage += willDamage;
-//         person.k -= willDamage;
-//         if(person.k <= 0){ // 체스판에서 사라진다.
-//            person.isDead = true;
-//         }
-//      }
-//
-//      //모든 기사들에 대해 배열 초기화
-//      return initMapByPeople(personHMap);
-//   }
+   }
 
    /////////////////// 여기서부터는 Util 및 내부 함수 ///////////////
 
@@ -252,22 +196,6 @@ public class Main {
       return true;
    }
 
-//   static boolean exitsPersonNextPos(int personNum, int dir, int [][] mapPersonNum){
-//      Person person = personHMap.get(personNum);
-//
-//      int endR = person.r + person.h - 1;
-//      int endC = person.c + person.w - 1;
-//      for(int r = person.r; r <= endR; r++){
-//         for(int c = person.c; c <= endC; c++){
-//            int nr = r + dirs[dir][0];
-//            int nc = c + dirs[dir][1];
-//            if(mapPersonNum[nr][nc] != personNum && mapPersonNum[nr][nc] > 0){ //자신이 아닌 기사번호가 탐색된다면
-//               return true;
-//            }
-//         }
-//      }
-//      return false;
-//   }
    //map에 Person의 영역을 표시해주는 함수
    static void markPersonInMap(Person person, int [][] map){
       int endR = person.r + person.h - 1;
@@ -278,17 +206,6 @@ public class Main {
          }
       }
    }
-   //map에 Person의 영역을 제거 해주는 함수
-//   static void remarkPersonInMapPersonNum(Person person, int [][] mapPersonNum){
-//      int endR = person.r + person.h - 1;
-//      int endC = person.c + person.w - 1;
-//      for(int r = person.r; r <= endR; r++){
-//         for(int c = person.c; c <= endC; c++){
-//            mapPersonNum[r][c] = 0;
-//         }
-//      }
-//
-//   }
 
    static boolean inArea(int r, int c){
       return r > 0 && c > 0 && r <= L && c <=L;
@@ -297,6 +214,5 @@ public class Main {
    static void sout(String s){
       System.out.println(s);
    }
-
 
 }
