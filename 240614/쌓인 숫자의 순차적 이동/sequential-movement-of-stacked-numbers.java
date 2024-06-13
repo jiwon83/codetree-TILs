@@ -107,7 +107,7 @@ public class Main {
       tmpDeque.addLast(fromDeque.pollLast());
 
       while(!tmpDeque.isEmpty()){
-         int movingNum = tmpDeque.pollFirst();
+         int movingNum = tmpDeque.pollLast();
          toDeque.addLast(movingNum);
          hm.put(movingNum, new Point(toR, toC));
       }
