@@ -1,6 +1,27 @@
 import java.util.*;
 import java.io.*;
 
+/**
+ * 전체 시간복잡도 ( M * L * L )
+ *
+ * 이 문제에서 유의할 점
+ * 연쇄적으로 밀리는 함수를 구현할 때, 이동하려는 방향의 끝에 벽이 있다면 모든 기사는 이동할 수 없게 된다에 유의
+ * -> 이 부분을 BFS로 구현하기 위해 int [][] 배열에 기사의 전체 영역에 대해 표시했다.
+ * -> 또한, 명령이 기사의 번호로 주어지고, 죽음 여부를 빠르게 확인하게 할 수 있도록 HashMap으로 관리했다.
+ * -> 명령을 받은 기사는 피해를 입지 않는 것에 유의
+ * -> 밀린 이후에 대미지를 입게되는 구현의 경우는 밀리는 와중에 구현해도 상관은 없을 듯?
+ *
+ *
+ * Variables 참고
+ * Person = 기사
+ *
+ * Methods
+ * 전체 process 함수 -> process()
+ * 기사의 이동(기사 번호, 방향)
+ * 연쇄적 이동(시작 기사 번호) -> interact()
+ * 비연쇄적 이동(시작 기사 번호) -> noInteract()
+ * 기사가 이동하려는 방향의 끝에 벽이 있는 지 여부(시작 기사 번호) -> canMove()
+ */
 public class Main {
    static class Person{
       int num, r, c, h, w, k, damage; // k = 체력
@@ -102,7 +123,8 @@ public class Main {
 
       // 2. 움직인다.
       for (int num : haveToMovePeople){
-         personHMap.get(num).move(dir);
+         Person person = personHMap.get(num);
+         person.move(dir);
       }
       
       // 3. 모든 기사들에 대해 배열 초기화
