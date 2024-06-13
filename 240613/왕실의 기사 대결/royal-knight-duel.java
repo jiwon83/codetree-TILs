@@ -87,13 +87,29 @@ public class Main {
                 // sout(" 다른 기사 존재 ");
                 mapPersonNum = interact(person, dir); // 연쇄적 작용
             }else{ 
-                // mapPersonNum = move(person, dir);
+                mapPersonNum = move(num, dir);
             } 
         }
     }
+    static int [][] move(int personNum, int dir){
+
+        int tmp[][] = new int[L+1][L+1];
+        //personNum에 대한 이동
+        Person targetPerson = personHMap.get(personNum);
+        targetPerson.r += dirs[dir][0];
+        targetPerson.c += dirs[dir][1];
+
+        for (int num = 1; num <=N; num++){
+            Person person = personHMap.get(num);
+            if(person.isDead) continue;
+            markPersonInMapPersonNum(person, tmp);
+        }
+        return tmp;
+    }
 
     // 연쇄적으로 밀려남
-    static int[][] interact(Person startPerson, int dir){
+    static int[][] interact(Person startPerson, int dir){ // 이거 그냥 int 로 받는 게 더 좋음 
+        int startPersonNum = startPerson.num;
         int [][] tmp = new int [L+1][L+1];
         // 시작 기사를 중점으로  가장 아래에 있는 기사부터 밀려난다.
         // 움직여야하는 기사 리스트를 받는다. 
@@ -104,27 +120,38 @@ public class Main {
         ArrayDeque<Integer> cp = haveToMovePeople.clone();
         while(!cp.isEmpty()){
             Person person = personHMap.get(cp.pollFirst());
-            int endR = person.r + person.h - 1;
-            int endC = person.c + person.w - 1;
-            for(int r = person.r; r <= endR; r++){
-                for(int c = person.c; c <= endC; c++){
-                    int nr = r + dirs[dir][0];
-                    int nc = c + dirs[dir][1];
-                    // sout("고려 위치 :  nr = "+ nr + " nc  = "+ nc);
-                    tmp[nr][nc] = person.num;
+
+            person.r += dirs[dir][0];
+            person.c += dirs[dir][1];
+
+            // int endR = person.r + person.h - 1;
+            // int endC = person.c + person.w - 1;
+            // for(int r = person.r; r <= endR; r++){
+            //     for(int c = person.c; c <= endC; c++){
+            //         int nr = r + dirs[dir][0];
+            //         int nc = c + dirs[dir][1];
+            //         // sout("고려 위치 :  nr = "+ nr + " nc  = "+ nc);
+            //         tmp[nr][nc] = person.num;
                     
-                }
-            }
-            int nextR = person.r + dirs[dir][0];
-            int nextC = person.c + dirs[dir][1];
-            personHMap.put(person.num, new Person(person.num, nextR, nextC, person.h, person.w, person.k));
+            //     }
+            // }
+            // int nextR = person.r + dirs[dir][0];
+            // int nextC = person.c + dirs[dir][1];
+            // personHMap.put(person.num, new Person(person.num, nextR, nextC, person.h, person.w, person.k));
             
         }
+        for (int num = 1; num <=N; num ++){
+            Person person = personHMap.get(num);
+            if( person.isDead) continue;
+            markPersonInMapPersonNum(person, tmp);
+        }
+        
         mapPersonNum = tmp;
 
         // 밀려난 모든 기사들의 피해 발생
-        while(!haveToMovePeople.isEmpty()){
+        while(!haveToMovePeople.isEmpty()){            
             Person person = personHMap.get(haveToMovePeople.pollFirst());
+            if(person.num == startPersonNum) continue;
             int willDamage = 0;
             int endR = person.r + person.h - 1;
             int endC = person.c + person.w - 1;
@@ -141,9 +168,7 @@ public class Main {
                 //disappear
                 person.isDead = true;
                 remarkPersonInMapPersonNum(person,mapPersonNum);
-
             }
-
         }
 
         // if 체력이 0 이하이면 fail 후, MAP에서 삭제
