@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-// 1. struct // 2. main(test) + sout ...+ methods(sample) // debug 
+// 1. struct // 2. main(test) + sout ...+ methods(sample) // debug
 public class Main {
 
     static class Santa implements Comparable<Santa>{
@@ -21,28 +21,29 @@ public class Main {
         }
         public String toString(){
             return num+"번 산타: ("+ r + " , "+ c + " ) "+ "score = " + score
-                + " sleep = "+ sleep + " is_out = "+ is_out;
+                    + " sleep = "+ sleep + " is_out = "+ is_out;
         }
 
     }
-    static int N, M, P, C, D; // p = 산타의 수 
+    static int N, M, P, C, D; // p = 산타의 수
     static int rouR, rouC; // roudolf 위치
     static HashMap<Integer, Santa> santaMap = new HashMap<>(); // 번호 별 산타들의 정보
     static StringBuilder sb = new StringBuilder();
     static int [][] santaNumMap; // 산타의 번호 map
-    static int [][] dirs8 = {{-1,-1}, {-1, 0}, {-1,1}, {0,-1}, {0,1}, {1, -1}, {1,0}, {1,1}};
+    static int [][] dirs8 = {{-1,-1}, {-1, 0}, {-1,1}, {0,-1}, {0,1}, {1, -1}, {1,0}, {1,1}}; //
     static int [][] dirs4 = {{-1,0}, {0, 1}, {1,0}, {0, -1}};
 
     public static void main(String[] args) throws Exception{
         input();
         for(int i = 1; i <= M; i++){
+            // System.out.println(i + " turn start ============");
+            // printNow();
             // 루돌프 1번 move
             roudolfMove();
-            
+
             // 순서대로 산타 move
             for(int num = 1; num <=P; num++){
                 santaMove(num);
-                
             }
             // if(산타 모두 탈락) -> 게임 종료
             if(allSantaFail()) break;
@@ -50,23 +51,25 @@ public class Main {
             addOneScoreNotFailSantas();
             // 기절한 산타들은 카운트 -1
             reduceSleepCount();
-            // sout(i+" turn exited ");
-            // printAllSanta();
+            //  sout(i+" turn exited ....");
+            //  printAllSanta();
+            // printNow();
         }
         printEachSantaScores();
     }
-    static boolean existSameArea(Santa santa, int rouR, int rouC){
-        return santa.r == rouR && santa.c == rouC;
+    static void printNow(){
+        System.out.println(" 루돌프 위치 : " + rouR +" , "+ rouC);
+        printArr(santaNumMap, "santaNumMap");
     }
 
     static void crash(int isRoudolf, int dir, Santa santa, int rouR, int rouC){
-        // sout("crash ..");
-        // sout("roudolf "+ rouR+ " , "+rouC);
-        // sout(santa.toString());
-        // sout(" isRoudolf:  "+ isRoudolf);
-        // sout(" dir = "+ dir);
+        //  sout("!!!!!!!!!!!!! crash !!!!!!!!!!!!!");
+        //  sout(" isRoudolf ?  "+ isRoudolf);
+        //  sout("roudolf :"+ rouR+ " , "+rouC);
+        //  sout(santa.toString());
+        //  sout(" dir = "+ dir);
 
-        // printArr(santaNumMap, "santaNumMap");
+        //  printArr(santaNumMap, "santaNumMap");
         int x = rouR;
         int y = rouC;
         int nextR = -1;
@@ -75,40 +78,38 @@ public class Main {
             santa.score += C;
             nextR = x + (dirs8[dir][0]*C);
             nextC = y + (dirs8[dir][1]*C);
-            
+
         }else{
             santa.score += D;
             dir = dir < 2 ? dir+2 : dir -2;
             nextR = x + (dirs4[dir][0]*D);
             nextC = y + (dirs4[dir][1]*D);
         }
-        // sout("next 위치 "+ nextR+ " , "+nextC);
+        // sout("밀려난 next 위치 "+ nextR+ " , "+nextC);
         if(!inArea(nextR, nextC)) {
             santaFail(santa);
             return;
         }
         // 다른 산타가 있다면
         if(santaNumMap[nextR][nextC] > 0){ // 상호작용
-          
+
             santaNumMap[x][y] = 0; // 이전 산타의 위치
             // sout("-------------상호작용 start-----------" + "목표위치 "+ " (" + nextR+ " , " + nextC+" )");
-            // printArr(santaNumMap, " santaNumMap");
+            //  printArr(santaNumMap, " santaNumMap");
             interact(isRoudolf, dir, nextR, nextC, santa); // 산타를 다음 방향에 착지시킨다.
-            // sout("-------------상호작용 end -----------");
-            // printArr(santaNumMap, " santaNumMap");
+            //  sout("-------------상호작용 end -----------");
+            //  printArr(santaNumMap, " santaNumMap");
         }else{ // 없다면
             moveSantaInSantaNumMap(santa.r, santa.c, nextR, nextC);
             santa.r = nextR;
             santa.c = nextC;
         }
-
+//
         // 기절
-        santa.sleep +=2;
-        
+        santa.sleep = 2; // 애매
+
     }
     static void interact(int isRoudolf, int dir, int r, int c, Santa santa){
-        // sout("-------------상호작용 -----------");
-
         // santa를 해당 위치에 착지 시킨다
         if(!inArea(r, c)){
             santaFail(santa);
@@ -124,7 +125,7 @@ public class Main {
                 nx += dirs4[dir][0];
                 ny += dirs4[dir][1];
             }
-   
+
             interact(isRoudolf, dir, nx, ny, santaMap.get(num));
 
         }
@@ -140,18 +141,24 @@ public class Main {
         }
         sout(" --------- -----------");
     }
+
+    static boolean existSameArea(Santa santa, int rouR, int rouC){
+        return santa.r == rouR && santa.c == rouC;
+    }
+
     static void santaFail(Santa santa){
         santa.is_out = true;
         santaNumMap[santa.r][santa.c] = 0;
     }
-    static void moveSantaInSantaNumMap(int fx, int fy, int ex, int ey){
+    static void moveSantaInSantaNumMap(int fx, int fy, int ex, int ey) {
         santaNumMap[ex][ey] = santaNumMap[fx][fy];
         santaNumMap[fx][fy] = 0;
     }
 
     static void santaMove(int num){
-        // sout(" santan move... ");
+        // sout(" santa move... ");
         Santa santa = santaMap.get(num);
+        // sout(santa.toString());
         if(santa.sleep > 0 || santa.is_out) return;
         // sout(" before "+ santaMap.get(num).toString());
         int oriDist = getDist(santa.r, santa.c, rouR , rouC);
@@ -178,13 +185,14 @@ public class Main {
             santa.r = nr;
             santa.c = nc;
             santaNumMap[nr][nc] = santa.num;
-            // sout(" after "+ santaMap.get(num).toString());   
+            //  sout(" after "+ santaMap.get(num).toString());
             if(existSameArea(santa, rouR, rouC)) crash(0, minDir, santa, rouR, rouC);
         }
-    
+
     }
-    
+
     static void roudolfMove(){
+        // System.out.println(" roudolf move  원래 위치: " + rouR + " , " + rouC);
         // 가장 높은 우선순위 산타를 정한다.
         Santa targetSanta = null;
         int minDist= Integer.MAX_VALUE;
@@ -199,23 +207,24 @@ public class Main {
             }
         }
 
-        // sout("가장 높은 우선 순위 산타 : " + targetSanta.num + " " + targetSanta.r + " , " + targetSanta.c);
+        //  sout("가장 높은 우선 순위 산타 : " + targetSanta.num + " " + targetSanta.r + " , " + targetSanta.c);
 
         // 8 방향 중 가장 가까워지는 방향을 찾는다.
         int closestDir = findCloesetDirIn8Dirs(rouR, rouC, targetSanta.r, targetSanta.c);
-        // sout(" 찾은 방향 "+ closestDir+ " 현재 루돌프 위치 : "+ rouR+ " , "+ rouC);
+
 
         if(closestDir != -1){
             // 해당 방향으로 이동
             rouR += dirs8[closestDir][0];
             rouC += dirs8[closestDir][1];
             if(!inArea(rouR, rouC)){
-                sout(" 루돌프 이동 방향 이상");
+                // sout(" 루돌프 이동 방향 이상");
                 System.exit(0);
             }
             if(existSameArea(targetSanta, rouR, rouC)) crash(1, closestDir, targetSanta, rouR, rouC);
+            // sout(" 찾은 방향 "+ closestDir+ " 이동한 루돌프 위치 : "+ rouR+ " , "+ rouC);
         }
-        
+
     }
     static boolean inArea(int r, int c){
         return r > 0 && c > 0 && r <=N && c <=N;
@@ -257,7 +266,7 @@ public class Main {
     }
 
     static int getDist(int x1, int y1, int x2, int y2){
-        return (int) (Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2)); 
+        return (int) (Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
     }
 
     static void reduceSleepCount(){
