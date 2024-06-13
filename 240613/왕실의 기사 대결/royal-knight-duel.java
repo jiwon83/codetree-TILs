@@ -226,7 +226,7 @@ public class Main {
                     int nc = c + dirs[dir][1];
                     // sout("고려 위치 :  nr = "+ nr + " nc  = "+ nc);
                     if(!inArea(nr, nc) || map[nr][nc] == 2){
-                        sout("움직일 수 X");
+                        // sout("움직일 수 X");
                         return false;
                     } 
                     if(mapPersonNum[nr][nc] > 0 && ch[mapPersonNum[nr][nc]]==0 ){
