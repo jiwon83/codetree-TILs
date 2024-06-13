@@ -81,20 +81,8 @@ public class Main {
       // printMap(map, "before");
       // 숫자를 옮긴다.
       if(maxNum != -1){
-         // 숫자위의 것까지 가져와서
-
          move(num, pos.x, pos.y, targetX, targetY, map);
-         // ArrayDeque<Integer> willMoveQ = getAndRemoveNumsQ(num, pos.x, pos.y, map);
-         // // 목적지의 맨위에 옮긴다.
-         // while(!willMoveQ.isEmpty()){
-         //     int number = willMoveQ.pollFirst();
-         //     map[targetX][targetY].addLast(number);
-         //     hm.put(number, new Point(targetX, targetY));
-         // }
-
       }
-
-      // printMap(map, "after");
    }
    static void move(int number, int fromR, int fromC, int toR, int toC, ArrayDeque<Integer>[][] map){
       ArrayDeque<Integer> fromDeque = map[fromR][fromC];
