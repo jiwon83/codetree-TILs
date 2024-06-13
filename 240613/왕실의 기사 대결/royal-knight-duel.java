@@ -116,7 +116,6 @@ public class Main {
    }
    
    static int[][] interact(int startPersonNum, int dir){
-      int [][] tmp = new int [L+1][L+1];
 
       // 1. 움직여야하는 기사 리스트를 받는다.
       List<Integer> haveToMovePeople = getHaveToMove(startPersonNum, dir);
@@ -126,9 +125,6 @@ public class Main {
          Person person = personHMap.get(num);
          person.move(dir);
       }
-      
-      // 3. 모든 기사들에 대해 배열 초기화
-      mapPersonNum = initMapByPeople(personHMap);
 
       // 3. 밀려난 모든 기사들의 피해를 발생 시킨다.
       for (int num : haveToMovePeople){
@@ -146,10 +142,11 @@ public class Main {
          person.k -= willDamage;
          if(person.k <= 0){ // 체스판에서 사라진다.
             person.isDead = true;
-            remarkPersonInMapPersonNum(person,tmp);
          }
       }
-      return tmp;
+      
+      //모든 기사들에 대해 배열 초기화
+      return initMapByPeople(personHMap);
    }
 
    /////////////////// 여기서부터는 Util 및 내부 함수 ///////////////
