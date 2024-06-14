@@ -49,10 +49,13 @@ public class Main {
     static boolean inArea(int r, int c){
         return r > 0 && c > 0 && r <=N && c <=M;
     }
-    static int[][] wind(int r1, int c1, int r2, int c2, int [][] arr){
-        // 특정 직사각형 영역에서 
-        // 1. 경계있는 숫자들을 시계방향으로 이동
-        assert arr==map;
+    static void wind(int r1, int c1, int r2, int c2, int [][] arr){
+        arr = roatateEgde(arr);
+        // System.out.println("경계 회전 후");
+        // printMap(arr);
+        arr = modify(r1,c1,r2,c2, arr);
+    }
+    static int [][] roatateEgde(int r1, int c1, int r2, int c2, int [][] arr){
         int tmp = arr[r1][c1];
         // up
         for(int r = r1; r < r2; r++){
@@ -71,13 +74,6 @@ public class Main {
             arr[r1][c] = arr[r1][c-1];
         }
         arr[r1][c1+1] = tmp;
-
-        // System.out.println("경계 회전 후");
-        // printMap(arr);
-
-        arr = modify(r1,c1,r2,c2, arr);
-        return arr;
-
     }
     static int [][] modify(int r1, int c1, int r2, int c2, int [][] arr){
         int [][] tmp = cloneMap(arr);
