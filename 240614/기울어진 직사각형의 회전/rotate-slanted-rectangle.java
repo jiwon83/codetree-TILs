@@ -1,6 +1,8 @@
 import java.util.*;
 import java.io.*;
 public class Main {
+    static final DIR_CLOCK = 1;
+    static final DIR_REV_CLOCK = 0;
     static class Node{
         int r, c, num;
         public Node(int r, int c, int num){
@@ -34,11 +36,9 @@ public class Main {
                 innerMap[node.r][node.c] = node.num;
             }
 
-
         }
         private List<Node> moveNumber(List<Node> square, int dir){
-            // List<Node> result = new ArrayList<>();
-            if(dir == 1){ // 시계 방향
+            if(dir == DIR_CLOCK){
                 int preNum = square.get(square.size()-1).num;
                 for(int to = square.size()-2; to >=0; to--){
                     int tmp = square.get(to).num;
@@ -48,7 +48,7 @@ public class Main {
                 }
                 square.get(square.size()-1).num = preNum;
                 
-            }else{
+            }else if(dir == DIR_REV_CLOCK) {
                 int preNum = square.get(0).num;
                 for(int to = 1; to < square.size(); to++){
                     int tmp = square.get(to).num;
@@ -86,7 +86,6 @@ public class Main {
                 c += dirs[3][1];
             }
             return square;
-
         }
         public void printMap(){
 
