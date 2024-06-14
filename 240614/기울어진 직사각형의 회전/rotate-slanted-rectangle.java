@@ -70,8 +70,8 @@ public class Main {
             for(int d = 0; d < 4; d++){
                 for(int num = 0; num < moveNums[d]; num++){
                     square.add(new Node(r, c, innerMap[r][c]));
-                    r += dirs[0][0];
-                    c += dirs[0][1];
+                    r += dirs[d][0];
+                    c += dirs[d][1];
                 }
             }
             // for(int i = 0; i < m1; i++){
