@@ -67,7 +67,7 @@ public class Main {
             arr[r][c2] = arr[r-1][c2];
         }
         // right
-        for(int c = c2; c > c1-1; c--){
+        for(int c = c2; c > c1+1; c--){
             arr[r1][c] = arr[r1][c-1];
         }
         arr[r1][c1+1] = tmp;
@@ -76,7 +76,6 @@ public class Main {
         // printMap(arr);
 
         arr = modify(r1,c1,r2,c2, arr);
-
         return arr;
 
     }
