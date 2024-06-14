@@ -25,7 +25,7 @@ public class Main {
     public static void main(String[] args) throws Exception{
         input();
         for(int t = 1; t <=T; t++){
-            arr = move(arr, N);
+            move(arr, N);
         }
         printArr(arr);
     }
@@ -40,20 +40,20 @@ public class Main {
 
     }
     // 오른쪽으로 이동
-    // static void move(int [] arr, int N){
-    //     int tmp = arr[N-1];
-    //     for(int i = N-1; i >=1; i--){ // 맨 오른쪽부터 순차 이동
-    //         arr[i] = arr[i-1];
-    //     }
-    //     arr[0] = tmp;
-    // }
-
-    static int [] move(int [] arr, int N){
-        int [] tmp = new int[N*2];
-        tmp[0] = arr[N*2-1];
-        for(int i = 1; i < N*2; i++){
-            tmp[i] = arr[i-1];
+    static void move(int [] arr, int N){
+        int tmp = arr[N-1];
+        for(int i = N-1; i >=1; i--){ // 맨 오른쪽부터 순차 이동
+            arr[i] = arr[i-1];
         }
-        return tmp;
+        arr[0] = tmp;
     }
+
+    // static int [] move(int [] arr, int N){
+    //     int [] tmp = new int[N*2];
+    //     tmp[0] = arr[N*2-1];
+    //     for(int i = 1; i < N*2; i++){
+    //         tmp[i] = arr[i-1];
+    //     }
+    //     return tmp;
+    // }
 }
