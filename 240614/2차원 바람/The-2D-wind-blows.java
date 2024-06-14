@@ -74,10 +74,11 @@ public class Main {
             arr[r1][c] = arr[r1][c-1];
         }
         arr[r1][c1+1] = tmp;
+        return arr;
     }
+    // 동시에 일어나야 하므로 배열을 복사해서 사용해야 함.
     static int [][] modify(int r1, int c1, int r2, int c2, int [][] arr){
         int [][] tmp = cloneMap(arr);
-
         for(int r = r1; r <=r2; r++){
             for(int c = c1; c <= c2; c++){
                 int sum = arr[r][c];
