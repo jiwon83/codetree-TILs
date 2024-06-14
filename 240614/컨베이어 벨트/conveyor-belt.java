@@ -41,8 +41,8 @@ public class Main {
     }
     // 오른쪽으로 이동
     static void move(int [] arr, int N){
-        int tmp = arr[N-1];
-        for(int i = N-1; i >=1; i--){ // 맨 오른쪽부터 순차 이동
+        int tmp = arr[N*2-1];
+        for(int i = N*2-1; i >=1; i--){ // 맨 오른쪽부터 순차 이동
             arr[i] = arr[i-1];
         }
         arr[0] = tmp;
