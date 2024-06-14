@@ -63,28 +63,37 @@ public class Main {
         }
         private List<Node> makeSquare(int r, int c, int m1, int m2, int m3, int m4){
 
-            int [][] dirs ={{-1,1}, {-1,-1}, {1,-1}, {1,1}};
+            int [][] dirs ={{-1,1}, {-1,-1}, {1,-1}, {1,1}}; // 이 순서대로 탐색
+            int [] moveNums = {m1, m2, m3, m4}; // 움직일 거리
             List<Node> square = new ArrayList<>();
-            for(int i = 0; i < m1; i++){
-                square.add(new Node(r, c, innerMap[r][c]));
-                r += dirs[0][0];
-                c += dirs[0][1];
-            } 
-            for(int i = 0; i <m2; i++){
-                square.add(new Node(r, c, innerMap[r][c]));
-                r += dirs[1][0];
-                c += dirs[1][1];
+
+            for(int d = 0; d < 4; d++){
+                for(int num = 0; num < moveNums[d]; num++){
+                    square.add(new Node(r, c, innerMap[r][c]));
+                    r += dirs[0][0];
+                    c += dirs[0][1];
+                }
             }
-            for(int i = 0; i <m3; i++){
-                square.add(new Node(r, c, innerMap[r][c]));
-                r += dirs[2][0];
-                c += dirs[2][1];
-            }
-            for(int i = 0; i <m4; i++){
-                square.add(new Node(r, c, innerMap[r][c]));
-                r += dirs[3][0];
-                c += dirs[3][1];
-            }
+            // for(int i = 0; i < m1; i++){
+            //     square.add(new Node(r, c, innerMap[r][c]));
+            //     r += dirs[0][0];
+            //     c += dirs[0][1];
+            // } 
+            // for(int i = 0; i <m2; i++){
+            //     square.add(new Node(r, c, innerMap[r][c]));
+            //     r += dirs[1][0];
+            //     c += dirs[1][1];
+            // }
+            // for(int i = 0; i <m3; i++){
+            //     square.add(new Node(r, c, innerMap[r][c]));
+            //     r += dirs[2][0];
+            //     c += dirs[2][1];
+            // }
+            // for(int i = 0; i <m4; i++){
+            //     square.add(new Node(r, c, innerMap[r][c]));
+            //     r += dirs[3][0];
+            //     c += dirs[3][1];
+            // }
             return square;
         }
         public void printMap(){
