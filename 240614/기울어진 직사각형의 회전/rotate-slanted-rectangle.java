@@ -1,8 +1,8 @@
 import java.util.*;
 import java.io.*;
 public class Main {
-    static final DIR_CLOCK = 1;
-    static final DIR_REV_CLOCK = 0;
+    static final int DIR_CLOCK = 1;
+    static final int DIR_REV_CLOCK = 0;
     static class Node{
         int r, c, num;
         public Node(int r, int c, int num){
