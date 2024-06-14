@@ -17,7 +17,7 @@ public class Main {
         for(int j = 0; j < 2; j++){
             st = new StringTokenizer(br.readLine());
             for(int i = 0; i < N; i++){
-                int idx = j * 3 + i;
+                int idx = j * N + i;
                 arr[idx] = Integer.parseInt(st.nextToken());
             }
         }
@@ -32,7 +32,7 @@ public class Main {
     static void printArr(int [] arr){
         for(int j = 0; j < 2; j++){
             for(int i = 0; i < N; i++){
-                int idx = j * 3 + i;
+                int idx = j * N + i;
                 System.out.print(arr[idx]+ " ");
             }
             System.out.println();
