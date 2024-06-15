@@ -42,13 +42,15 @@ public class Main{
 			// 모든 참가자 이동
 			allPersonMove(personList);
 			
+			if(allpersonEscape(personList)) { // 모든 참가자 탈출
+				break;
+			}
+			
 			// 미로 회전
 			map = rotateMap(map);
 			
 			
-			if(allpersonEscape(personList)) { // 모든 참가자 탈출
-				break;
-			}
+			
 		}
 		//모든 참가자의 sum(이동거리, 출구좌표)
 		int sum = 0;
@@ -70,6 +72,7 @@ public class Main{
 		for(int r = 1; r <=N; r++) {
 			for(int c = 1; c <=N; c++) {
 				for(int len = 1; len < minLen; len++) {
+					if(r <= 0 || c  <= 0 || r+len-1 > N || c +len-1 > N) continue;
 					// r과 C를 시작점으로 하는 len 길이의 정사각형 탐색
 					if(isSuccessCondition(r,c,len, map, personList)) {
 						minLen = len;
