@@ -48,6 +48,6 @@ public class Main {
             else sequenceCnt = 1;
             maxCount = Math.max(maxCount, sequenceCnt);
         }
-        return sequenceCnt >= M;
+        return maxCount >= M;
     }
 }
