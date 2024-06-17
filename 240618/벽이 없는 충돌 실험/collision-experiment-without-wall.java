@@ -47,7 +47,7 @@ public class Main{
 				marbleHmap.put(i, new Marble(i, x, y, w, d, false));
 			}
 			// pro
-			int maxTime = 2000;
+			int maxTime = 4000;
 			for(int time =1; time <=maxTime; time++) {
 				pro(time);
 				if(allmarbleIsDead(marbleHmap)) break;
