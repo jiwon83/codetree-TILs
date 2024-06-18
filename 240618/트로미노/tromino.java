@@ -3,48 +3,46 @@ import java.io.*;
 
 public class Main {
 
-    static int [][] block1,block2,block3, map;
+    static int [][] block1, block2, map;
+    static int N,M;
 
     public static void main(String[] args) throws Exception{
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        map = new int[n][m];
-        for(int i = 0; i < n; i++){
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        map = new int[N][M];
+        for(int i = 0; i < N; i++){
             st = new StringTokenizer(br.readLine());
-            for(int j = 0; j <m; j++){
+            for(int j = 0; j <M; j++){
                 map[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
         // 여기에 코드를 작성해주세요.
         initBlocks();
-        System.out.println(solution(n,  m));
+        System.out.println(solution());
 
     }
-    static void initBlocks(){
+    static void initBlocks(){ // 유의점 !! 왼쪽이랑 맨위에 빈공간이 있으면 고려하지 못하는 범위 발생!!
         block1 = new int[][]{
             {1, 0},
             {1, 1}
         };
         block2 = new int[][]{
-            {1,1,1}
-        };
-        block3 = new int[][]{
-            {1},
-            {1},
-            {1}
+            {1,1,1},
+            {0,0,0},
+            {0,0,0}
         };
     }
-    static int solution(int N, int M){
+    static int solution(){
         int maxSum = 0;
         //block 1
         for(int r = 0; r < 4; r++){ // 총 4번의 회전
             for(int i = 0; i < N; i++){
                 for(int j = 0; j <M; j++){
-                    if(!inArea(i, j, block1.length, block1[0].length, N, M)) continue;
+                    // if(!inArea(i, j, block1.length, block1[0].length, N, M)) continue;
                     maxSum = Math.max(maxSum, getSum(i, j, block1, map));
                 }
             }
@@ -52,21 +50,15 @@ public class Main {
         }
 
         //block2
-        
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j <M; j++){
-                if(!inArea(i, j, block2.length, block2[0].length, N, M)) continue;
-                maxSum = Math.max(maxSum, getSum(i, j, block2, map));
+        for(int r = 0; r < 2; r++){
+            for(int i = 0; i < N; i++){
+                for(int j = 0; j <M; j++){
+                    // if(!inArea(i, j, block2.length, block2[0].length, N, M)) continue;
+                    maxSum = Math.max(maxSum, getSum(i, j, block2, map));
+                }
             }
+            block2 = roatate90(block2);
         }
-       
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j <M; j++){
-                if(!inArea(i, j, block3.length, block3[0].length, N, M)) continue;
-                maxSum = Math.max(maxSum, getSum(i, j, block3, map));
-            }
-        }
-    
         return maxSum;
 
     }
@@ -91,11 +83,15 @@ public class Main {
                 int ni = sr + i;
                 int nj = sc + j;
                 if(block[i][j] > 0){
+                    if(!inArea(ni, nj)) return -1;
                     sum += map[ni][nj];
                 }
             }
         }
         return sum;
+    }
+    static boolean inArea(int r, int c){
+        return r < N && c < M;
     }
     static boolean inArea(int sr, int sc, int lenR, int lenC, int N, int M){
         return sr + lenR - 1 < N && sc + lenC - 1 < M;
