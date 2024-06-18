@@ -42,7 +42,6 @@ public class Main {
         for(int r = 0; r < 4; r++){ // 총 4번의 회전
             for(int i = 0; i < N; i++){
                 for(int j = 0; j <M; j++){
-                    // if(!inArea(i, j, block1.length, block1[0].length, N, M)) continue;
                     maxSum = Math.max(maxSum, getSum(i, j, block1, map));
                 }
             }
@@ -53,7 +52,6 @@ public class Main {
         for(int r = 0; r < 2; r++){
             for(int i = 0; i < N; i++){
                 for(int j = 0; j <M; j++){
-                    // if(!inArea(i, j, block2.length, block2[0].length, N, M)) continue;
                     maxSum = Math.max(maxSum, getSum(i, j, block2, map));
                 }
             }
@@ -92,8 +90,5 @@ public class Main {
     }
     static boolean inArea(int r, int c){
         return r < N && c < M;
-    }
-    static boolean inArea(int sr, int sc, int lenR, int lenC, int N, int M){
-        return sr + lenR - 1 < N && sc + lenC - 1 < M;
     }
 }
