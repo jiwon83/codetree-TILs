@@ -42,7 +42,7 @@ public class Main {
         for(int r = 0; r < 4; r++){ // 총 4번의 회전
             for(int i = 0; i < N; i++){
                 for(int j = 0; j <M; j++){
-                    maxSum = Math.max(maxSum, getSum(i, j, block1, map));
+                    maxSum = Math.max(maxSum, getSum(i, j, block1, map)); // 
                 }
             }
             block1 = roatate90(block1);
@@ -80,8 +80,8 @@ public class Main {
             for(int j = 0; j < block[0].length; j++){
                 int ni = sr + i;
                 int nj = sc + j;
-                if(block[i][j] > 0){
-                    if(!inArea(ni, nj)) return -1;
+                if(block[i][j] > 0){ 
+                    if(!inArea(ni, nj)) return -1; // max 범위 체크를 여기에서 하는 게 효과적
                     sum += map[ni][nj];
                 }
             }
