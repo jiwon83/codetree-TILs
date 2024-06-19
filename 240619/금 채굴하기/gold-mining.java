@@ -58,25 +58,33 @@ public class Main {
     }
     static int makeRhombus(int r, int c, int k){
         int count = 0;
-        int [][] ch = new int[N][N];
-        ArrayDeque<Info> q = new ArrayDeque<>();
-        q.addLast(new Info(r,c,0));
-        ch[r][c] = 1;
-
-        while(!q.isEmpty()){
-            Info info = q.pollFirst();
-            if(map[info.r][info.c] == 1) count += 1;
-            if(info.dist == k) continue;
-            for(int d = 0; d < 4; d ++){
-                int nr = info.r + dirs[d][0];
-                int nc = info.c + dirs[d][1];
-                if(!inArea(nr,nc)) continue;
-                if(ch[nr][nc] ==1 ) continue;
-                ch[nr][nc] = 1;
-                q.addLast(new Info(nr,nc, info.dist+1));
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < N; j++){
+                if( Math.abs( r - i) + Math.abs(c - j) > k) continue;
+                if( map[i][j] == 1) count+1;
             }
         }
         return count;
+        // int count = 0;
+        // int [][] ch = new int[N][N];
+        // ArrayDeque<Info> q = new ArrayDeque<>();
+        // q.addLast(new Info(r,c,0));
+        // ch[r][c] = 1;
+
+        // while(!q.isEmpty()){
+        //     Info info = q.pollFirst();
+        //     if(map[info.r][info.c] == 1) count += 1;
+        //     if(info.dist == k) continue;
+        //     for(int d = 0; d < 4; d ++){
+        //         int nr = info.r + dirs[d][0];
+        //         int nc = info.c + dirs[d][1];
+        //         if(!inArea(nr,nc)) continue;
+        //         if(ch[nr][nc] ==1 ) continue;
+        //         ch[nr][nc] = 1;
+        //         q.addLast(new Info(nr,nc, info.dist+1));
+        //     }
+        // }
+        // return count;
     }
     static boolean isBeneficial(int goldCnt, int profit, int cost){
         return goldCnt * profit >= cost;
