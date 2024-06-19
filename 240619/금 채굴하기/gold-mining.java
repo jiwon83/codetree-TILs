@@ -38,7 +38,7 @@ public class Main {
         for(int r = 0; r < N; r++){
             for(int c = 0; c < N; c++){
                 // 모든 K를 가정
-                for(int k = 0; k < N; k++){
+                for(int k = 0; k <= N; k++){
                     // 증점과 k 로 마름모를 만들고 금의 갯수를 계산
                     int count = makeRhombus(r, c, k);
                     // System.out.println(r + " , "+ c + ". k ="+ k);
