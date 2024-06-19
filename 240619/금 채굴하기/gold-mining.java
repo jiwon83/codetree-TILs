@@ -61,7 +61,7 @@ public class Main {
         for(int i = 0; i < N; i++){
             for(int j = 0; j < N; j++){
                 if( Math.abs( r - i) + Math.abs(c - j) > k) continue;
-                if( map[i][j] == 1) count+1;
+                if( map[i][j] == 1) count += 1;
             }
         }
         return count;
