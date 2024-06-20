@@ -39,29 +39,15 @@ public class Main {
 
     private static int makeSquare(int r, int c, int w, int h){
         int sum = 0;
-        for(int i = 0; i < w; i++){
-            r += dirs[0][0];
-            c += dirs[0][1];
-            if(!inArea(r, c)) return 0;
-            sum += map[r][c];
-        }
-        for(int i = 0; i < h; i++){
-            r += dirs[1][0];
-            c += dirs[1][1];
-            if(!inArea(r, c)) return 0;
-            sum += map[r][c];
-        }
-        for(int i = 0; i < w; i++){
-            r += dirs[2][0];
-            c += dirs[2][1];
-            if(!inArea(r, c)) return 0;
-            sum += map[r][c];
-        }
-        for(int i = 0; i < h; i++){
-            r += dirs[3][0];
-            c += dirs[3][1];
-            if(!inArea(r, c)) return 0;
-            sum += map[r][c];
+        int [] moveNum = {w,h,w,h};
+
+        for(int d = 0; d < 4; d++){
+            for(int i = 0; i < moveNum[d]; i++){
+                r += dirs[d][0];
+                c += dirs[d][1];
+                if(!inArea(r, c)) return 0;
+                sum += map[r][c];
+            }
         }
         return sum;
     }
