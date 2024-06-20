@@ -6,6 +6,7 @@ public class Main {
     static int [][] ladder;
     static int [][] active;
     static int N, M;
+    static final int ROW = 15;
     static int [] ch; // idx 번째 사다리의 사용 유무
     static int [] result; // 맨 처음 결과
     static List<Point> ladderInfos = new ArrayList<>();
@@ -16,8 +17,8 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        ladder = new int[M+1][N+1];
-        active = new int[M+1][N+1];
+        ladder = new int[ROW+1][N+1];
+        active = new int[ROW+1][N+1];
         for(int i = 1; i <=M; i++){
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
@@ -94,7 +95,7 @@ public class Main {
     }
     private static int climbing(int col){ // 시작위치
         // 세로줄을 한칸씩 이동하면서
-        for(int r = 1; r <= M; r ++){
+        for(int r = 1; r <= ROW; r ++){
             if( active[r][col-1] ==1 && ladder[r][col - 1] > 0){ // 왼쪽 연결사다리가 있다면
                 col -= 1;
             }
