@@ -20,25 +20,23 @@ public class Main {
             }
         }
 
-        // 여기에 코드를 작성해주세요.
         // 1번째 위치 선택 + 물건을 고르고
         for(int i = 0; i < N; i++){
             for(int j = 0; j + M -1 < N; j++){
                 for(int h = 0; h < N; h++){
                     for(int w = 0; w + M -1 < N; w++){
-                        if(isPossible(i, j, h, w)) continue;
-                        int value1 = recurSelect(0, i, j, M, C, 0, 0);
-                        int value2 = recurSelect(0, h, w, M, C, 0, 0);
+                        if(!isPossible(i, j, h, w)) continue;
+                        int value1 = recurSelect(0, i, j, 0, 0);
+                        int value2 = recurSelect(0, h, w, 0, 0);
                         ans = Math.max(ans, value1 + value2);
                     }
                 }
             }
         }
         System.out.println(ans);
-        // 이어서 2번째 선택 + 물건 고름
     }
     static boolean isPossible(int r, int c, int r2, int c2){
-        if( r1 != r2 ) return true;
+        if( r != r2 ) return true;
         int cEnd = c + M - 1;
         int c2End = c2 + M - 1;
         return cEnd < c2 || c2End < c;
