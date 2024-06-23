@@ -36,7 +36,7 @@ public class Main {
             if(number.charAt(L) == number.charAt(R)){
                 int len = R - L;
                 for(int i = 0; i < len; i++){
-                    if( L - i < 0) continue loop;
+                    if( L - i < 0) return false;
                     if(number.charAt(R-i) != number.charAt(L-i)) continue loop;
                 }
                 return true;
