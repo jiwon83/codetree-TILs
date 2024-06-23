@@ -26,35 +26,34 @@ public class Main {
             for(int j = 0; j + M -1 < N; j++){
                 for(int h = 0; h < N; h++){
                     for(int w = 0; w + M -1 < N; w++){
-                        if( i == h && !isNotOverlap(j, j+M-1, w, w+M-1)) continue;
-                        // System.out.println( " i = "+i + " j="+j+" h="+h +" w = "+ w );
+                        if(isPossible(i, j, h, w)) continue;
                         int value1 = recurSelect(0, i, j, M, C, 0, 0);
                         int value2 = recurSelect(0, h, w, M, C, 0, 0);
-                        // System.out.println(" value 1 " + value1 + " , value 2 "+value2);
                         ans = Math.max(ans, value1 + value2);
                     }
                 }
-                
             }
         }
         System.out.println(ans);
         // 이어서 2번째 선택 + 물건 고름
     }
-    static boolean isNotOverlap(int i, int j, int i2, int j2){
-        return j < i2 || j2 < i;
+    static boolean isPossible(int r, int c, int r2, int c2){
+        if( r1 != r2 ) return true;
+        int cEnd = c + M - 1;
+        int c2End = c2 + M - 1;
+        return cEnd < c2 || c2End < c;
     }
-    static int recurSelect(int k, int r, int c, int len, int limit, int sum, int value){
-        if(k == len){
+    // r,c 에서 M 만큼의 길이 중 수집 가능한 가장 최고의 value를 return
+    static int recurSelect(int k, int r, int c, int sum, int value){
+        if(k == M){
            return value;
         }
-        // select Or not select
-        int result0 = recurSelect(k+1, r, c, len, limit, sum, value);
-        int result1 = -1;
-        if( c + k < N){
-            int willSum = sum + map[r][c+k];
-            if(willSum <= limit) result1 = recurSelect(k+1, r, c, len, limit, willSum, value + map[r][c+k] * map[r][c+k]);
+        int noSelect = recurSelect(k+1, r, c, sum, value);
+        int select = -1;
+        if(sum + map[r][c+k] <= C) {
+            select = recurSelect(k+1, r, c, sum + map[r][c+k], value + map[r][c+k] * map[r][c+k]);
         }
-        return Math.max(result0, result1);
+        return Math.max(noSelect, select);
         
     }
 }
