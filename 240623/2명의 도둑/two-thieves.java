@@ -11,7 +11,7 @@ public class Main {
         st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        C= Integer.parseInt(st.nextToken());
+        C = Integer.parseInt(st.nextToken());
         map = new int[N][N];
         for(int i= 0; i < N; i++){
             st = new StringTokenizer(br.readLine());
@@ -26,9 +26,11 @@ public class Main {
             for(int j = 0; j + M -1 < N; j++){
                 for(int h = 0; h < N; h++){
                     for(int w = 0; w + M -1 < N; w++){
-                        if(!isNotOverlap(i, j, h, w)) continue;
+                        if( i == h && !isNotOverlap(j, j+M-1, w, w+M-1)) continue;
+                        // System.out.println( " i = "+i + " j="+j+" h="+h +" w = "+ w );
                         int value1 = recurSelect(0, i, j, M, C, 0, 0);
                         int value2 = recurSelect(0, h, w, M, C, 0, 0);
+                        // System.out.println(" value 1 " + value1 + " , value 2 "+value2);
                         ans = Math.max(ans, value1 + value2);
                     }
                 }
@@ -43,7 +45,7 @@ public class Main {
     }
     static int recurSelect(int k, int r, int c, int len, int limit, int sum, int value){
         if(k == len){
-            return value;
+           return value;
         }
         // select Or not select
         int result0 = recurSelect(k+1, r, c, len, limit, sum, value);
