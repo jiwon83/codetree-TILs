@@ -14,6 +14,7 @@ public class Main {
     }
     private static void recur(int k, String num){
         if(find) return;
+        // System.out.println(num);
         if(k == N){
             ans = num;
             find = true;
@@ -25,19 +26,50 @@ public class Main {
         }
     }
     private static boolean existPattern(String number){
-        ch = new int [3];
-        int totalCnt = 0;
+        // ch = new int [3];
+        // int totalCnt = 0;
+        // System.out.println(number);
+        int R = number.length()-1;
+
+        loop : for(int L = number.length()-2; L >=0 ; L--){
+            
+            if(number.charAt(L) == number.charAt(R)){
+                int len = R - L;
+                for(int i = 0; i < len; i++){
+                    if( L - i < 0) continue loop;
+                    if(number.charAt(R-i) != number.charAt(L-i)) continue loop;
+                }
+                return true;
+            }
+        
+        }
+        return false;
+    }
+
+    private static boolean existPattern2(String number){
+        // ch = new int [3];
+        // int totalCnt = 0;
+        System.out.println(number);
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
 
         for(int i = number.length()-1; i >=0 ; i--){
-            int idx = number.charAt(i) - '4';
-            if(ch[idx]==1){
-                ch[idx] = 0;
-                totalCnt -= 1;
+            int num = number.charAt(i) - '4';
+
+            if(!deque.isEmpty() && deque.peekLast() == num){
+                deque.pollLast();
             }else{
-                ch[idx] = 1;
-                totalCnt += 1;
+                deque.addFirst(num);
             }
-            if( totalCnt == 0) return true;
+            if(deque.isEmpty()) return true;
+
+            // if(ch[idx]==1){
+            //     ch[idx] = 0;
+            //     totalCnt -= 1;
+            // }else{
+            //     ch[idx] = 1;
+            //     totalCnt += 1;
+            // }
+            // if( totalCnt == 0) return true;
 
         }
         return false;
