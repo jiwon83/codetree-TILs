@@ -29,17 +29,17 @@ public class Main {
         for(int end2 = number.length()-2; end2 >=0 ; end2--){
             
             if(number.charAt(end2) == number.charAt(end)){ // ~ last number 형태의 패턴이 성사 가능한 지점을 찾는다.
-                int len = end2 - end1;
+                int len = end - end2;
                 int start2 = end2 - len + 1;
                 int start1 = end2 + 1;
                 if( start2 < 0) return false;
-                isSameWord(len, start2, start1, number) return true;
+                if(isSameWord(len, start2, start1, number)) return true;
             }
         
         }
         return false;
     }
-    private boolean isSameWord(int len, int s1, int s2, String word){
+    private static boolean isSameWord(int len, int s1, int s2, String word){
         for(int i = 0; i < len; i++){
             if(word.charAt(s1+i) != word.charAt(s2+i)) return false;
         }
