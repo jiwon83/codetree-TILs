@@ -27,6 +27,7 @@ public class Main {
             return;
         }
         for(int r = 1; r <=N; r++){
+            if(rows[r] == 1) continue;
             for(int c = 1; c <=N; c++){
                 if(rows[r] == 0 && cols[c] == 0){
                     rows[r] = 1;
