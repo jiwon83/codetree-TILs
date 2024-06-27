@@ -48,7 +48,7 @@ public class Main{
 			}
 			// pro
 			int maxTime = 4000;
-			for(int time =1; time <= maxTime+1; time++) {
+			for(int time =1; time <= maxTime; time++) {
 				pro(time);
 				if(allmarbleIsDead(marbleHmap)) break;
                 
