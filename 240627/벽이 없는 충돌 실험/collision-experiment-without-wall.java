@@ -1,6 +1,9 @@
 import java.util.*;
 import java.io.*;
-
+/*
+틀렸던 이유: INT [4000][4000]을 100개의 테스트 케이스마다 초기화하면 메모리 초과 발생.
+그리고 1턴이 끝난 후에, 죽지 않은 구슬까지 모두 수동 초기화 해주어야 함.
+*/ 
 public class Main{
 	static class Marble implements Comparable<Marble>{
 		int num, x, y, w, d;
