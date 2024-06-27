@@ -50,10 +50,7 @@ public class Main{
 			int maxTime = 4000;
 			for(int time =1; time <= maxTime; time++) {
 				pro(time);
-				if(allmarbleIsDead(marbleHmap)) break;
-                
-				//map = new int [MAX_LEN+1][MAX_LEN+1];
-				
+				//if(allmarbleIsDead(marbleHmap)) break;
 			}
 			sbRes.append(lastCrashTime).append("\n");
 		}
