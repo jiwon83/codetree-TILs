@@ -25,10 +25,10 @@ public class Main{
 	static int N, T, lastCrashTime;
 	static int OFFSET = 2000;
 	static int MAX_LEN = 4000;
-	static HashMap<Integer, Marble> marbleHmap;
+	static HashMap<Integer, Marble> marbleHmap = new HashMap<>();
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
-	static int [][] map;
+	static int [][] map = new int[MAX_LEN+1][MAX_LEN+1];
 	static int [][] dirs = {{0,1}, {0,-1}, {1,0}, {-1,0}};
 	static StringBuilder sbRes = new StringBuilder();
 	
@@ -36,8 +36,8 @@ public class Main{
 		
 		T = Integer.parseInt(br.readLine());
 		for(int tc = 1; tc <=T; tc++) {
-			marbleHmap = new HashMap<>();
-			map = new int [MAX_LEN+1][MAX_LEN+1];
+//			marbleHmap = new HashMap<>();
+//			map = new int [MAX_LEN+1][MAX_LEN+1];
 			lastCrashTime = -1;
 			N = Integer.parseInt(br.readLine());
 			for(int i = 1; i <=N; i++) {
@@ -57,10 +57,18 @@ public class Main{
 				//map = new int [MAX_LEN+1][MAX_LEN+1];
 				
 			}
+			// 충돌하지 않는 구술들을 map에서 지워준다.
+			clearMarbles(marbleHmap);
+			
 			sbRes.append(lastCrashTime).append("\n");
 		}
 		System.out.println(sbRes);
 		
+	}
+	private static void clearMarbles(HashMap<Integer, Marble> marbleHmap) {
+		for(Map.Entry<Integer, Marble> entry : marbleHmap.entrySet()) {
+			map[entry.getValue().x][entry.getValue().y] = 0;
+		}
 	}
 	private static boolean allmarbleIsDead(HashMap<Integer, Marble> marbleHmap) {
 		for(Map.Entry<Integer, Marble> entry : marbleHmap.entrySet()) {
