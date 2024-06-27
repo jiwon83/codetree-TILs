@@ -30,11 +30,12 @@ public class Main {
     }
     private static void recurVisit(int k, int cost, int pre, int start){
         if(k == N){
-            minCost = Math.min(minCost, cost + costs[pre][start]);
+            if(costs[pre][start] != 0) minCost = Math.min(minCost, cost + costs[pre][start]);
             return;
         }
         for(int i = 1; i <= N; i++){
             if(ch[i] == 1) continue;
+            if(costs[pre][i] == 0) continue;
             ch[i] = 1;
             recurVisit(k+1, cost + costs[pre][i], i, start);
             ch[i] = 0;
