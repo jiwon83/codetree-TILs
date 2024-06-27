@@ -25,10 +25,10 @@ public class Main{
 	static int N, T, lastCrashTime;
 	static int OFFSET = 2000;
 	static int MAX_LEN = 4000;
-	static HashMap<Integer, Marble> marbleHmap = new HashMap<>();
+	static HashMap<Integer, Marble> marbleHmap;
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
-	static int [][] map = new int [MAX_LEN+1][MAX_LEN+1];
+	static int [][] map;
 	static int [][] dirs = {{0,1}, {0,-1}, {1,0}, {-1,0}};
 	static StringBuilder sbRes = new StringBuilder();
 	
@@ -36,6 +36,8 @@ public class Main{
 		
 		T = Integer.parseInt(br.readLine());
 		for(int tc = 1; tc <=T; tc++) {
+			marbleHmap = new HashMap<>();
+			map = new int [MAX_LEN+1][MAX_LEN+1];
 			lastCrashTime = -1;
 			N = Integer.parseInt(br.readLine());
 			for(int i = 1; i <=N; i++) {
@@ -50,7 +52,10 @@ public class Main{
 			int maxTime = 4000;
 			for(int time =1; time <= maxTime; time++) {
 				pro(time);
-				//if(allmarbleIsDead(marbleHmap)) break;
+				if(allmarbleIsDead(marbleHmap)) break;
+                
+				//map = new int [MAX_LEN+1][MAX_LEN+1];
+				
 			}
 			sbRes.append(lastCrashTime).append("\n");
 		}
