@@ -9,21 +9,21 @@ public class Main {
         }
     }
     static int MAX_N = 1000000;
-    static int [] cnt = new int[MAX_N+1];
+    static int [] ch = new int[MAX_N+1];
     static int [] operNum = {1, 1, 3, 2};
     static char [] oper = {'+', '-', '/', '/' };
     
     public static void main(String[] args) throws Exception{
         Scanner sc = new Scanner(System.in);
         int number = sc.nextInt();
-        Arrays.fill(cnt, number); // 최대는 -1을 계속할 경우 1이 될 수 있다.
+        //Arrays.fill(cnt, number); // 최대는 -1을 계속할 경우 1이 될 수 있다.
         System.out.println(bfs(number));
 
     }
     public static int bfs(int number){
         ArrayDeque<Info> q = new ArrayDeque<>();
         q.add(new Info(number, 0));
-        cnt[number] = 0;
+        ch[number] = 1;
 
         while(!q.isEmpty()){
 
@@ -33,8 +33,8 @@ public class Main {
 
             for(int c = 0; c < 4; c++){
                 int nextNumber = calculate(out.num, oper[c], operNum[c]);
-                if(nextNumber <= MAX_N && out.cnt+1 < cnt[nextNumber]){
-                    cnt[nextNumber] = out.cnt + 1;
+                if(nextNumber <= MAX_N && ch[nextNumber]==0){
+                    ch[nextNumber] =  1;
                     q.addLast(new Info(nextNumber, out.cnt+1));
                 }
             }
