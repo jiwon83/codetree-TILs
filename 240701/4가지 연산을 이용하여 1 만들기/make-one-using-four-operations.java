@@ -9,16 +9,14 @@ public class Main {
         }
     }
     static int MAX_N = 1000000;
-    static int [] ch = new int[MAX_N+1];
+    static int [] ch = new int[MAX_N * 2 -1];
     static int [] operNum = {1, 1, 3, 2};
     static char [] oper = {'+', '-', '/', '/' };
     
     public static void main(String[] args) throws Exception{
         Scanner sc = new Scanner(System.in);
         int number = sc.nextInt();
-        //Arrays.fill(cnt, number); // 최대는 -1을 계속할 경우 1이 될 수 있다.
         System.out.println(bfs(number));
-
     }
     public static int bfs(int number){
         ArrayDeque<Info> q = new ArrayDeque<>();
@@ -28,7 +26,6 @@ public class Main {
         while(!q.isEmpty()){
 
             Info out = q.pollFirst();
-            //System.out.println(out.num + " : cnt = "+ out.cnt);
             if(out.num == 1) return out.cnt;
 
             for(int c = 0; c < 4; c++){
