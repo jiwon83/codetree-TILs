@@ -1,5 +1,8 @@
 import java.util.*;
 import java.io.*;
+/*
+이 문제에서는 List<Marble> [][] map 으로 관리하는 게 더 편함.
+*/
 public class Main {
     static class Marble implements Comparable<Marble>{
         int r, c, num, speed, dir;
@@ -49,17 +52,17 @@ public class Main {
       
         // main logic
         for(int t = 1; t <=T; t++){
-            // 모든 구슬의 이동
-            List<Marble> [][] nextMap = initMap();
+            
+            List<Marble> [][] nextMap = initMap(); // 다음의 map을 저장할 배열 초기화
 
             for(int i = 1; i <=N ; i++){
                 for(int j = 1; j <=N; j++) {
-                    for(Marble marble : map[i][j]){
+                    for(Marble marble : map[i][j]){ // 모든 구슬의 이동
                         move(marble, nextMap);
                     }
                 }
             }
-            map = nextMap;
+            map = nextMap; // map을 바꿔준다.
         }
         printMarblesCnt();
     }
