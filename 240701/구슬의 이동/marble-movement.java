@@ -26,7 +26,6 @@ public class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     public static void main(String[] args) throws Exception {
-        // 여기에 코드를 작성해주세요.
         // input
         mapper['U'] = 0;
         mapper['D'] = 3;
@@ -61,11 +60,8 @@ public class Main {
                 }
             }
             map = nextMap;
-//            printMap(map);
         }
-        // print marbles cnt
         printMarblesCnt();
-
     }
     private static void printMarblesCnt() {
     	int cnt = 0;
@@ -101,7 +97,6 @@ public class Main {
         int nextR = r + dirs[dir][0];
         int nextC = c + dirs[dir][1];
         return nextR <= 0 || nextC <=0 || nextR > N || nextC > N;
-
     }
     static ArrayList<Marble>[][] initMap(){
         ArrayList<Marble>[][] tmp = new ArrayList[MAX_N+1][MAX_N+1];
@@ -111,13 +106,5 @@ public class Main {
             }
         }
         return tmp;
-    }
-    static void printMap(List<?> [][] map){
-        for(int i = 1; i <= N; i++){
-            for(int j = 1; j <=N; j++){
-                System.out.println(i+" , "+ j);
-                System.out.println(map[i][j]);
-            }
-        }
     }
 }
