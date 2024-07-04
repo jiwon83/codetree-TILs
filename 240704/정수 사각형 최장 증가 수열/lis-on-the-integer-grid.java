@@ -1,6 +1,9 @@
 import java.util.*;
 import java.io.*;
-
+/*
+방법 1. 메모이제이션, 시간 복잡도 N^2
+방법 2. 모든 값의 값을 정렬 & 가장 작은 값부터 4개 방향으로 갱신 (자기보다 작을 경우) +1
+*/ 
 public class Main {
     static int MAX_N = 500;
     static int maxAns = 1;
@@ -9,7 +12,6 @@ public class Main {
     static int [][] map = new int[MAX_N+1][MAX_N+1];
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
-
 
     public static void main(String[] args)throws Exception {
         // 여기에 코드를 작성해주세요.
