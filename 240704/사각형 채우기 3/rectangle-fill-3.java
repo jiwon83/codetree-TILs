@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 public class Main {
     public static void main(String[] args) {
-        int mod = 1000000007
+        int mod = 1000000007;
         Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
         
