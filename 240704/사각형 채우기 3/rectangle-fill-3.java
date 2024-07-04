@@ -7,12 +7,16 @@ public class Main {
         int N = sc.nextInt();
         
         
-        int [] dp = new int[1001];
+        long [] dp = new long[1001];
         dp[1] = 2;
         dp[2] = 7;
         dp[3] = 22;
         for(int i = 4; i <= N; i++){
-            dp[i] = (dp[i-1] * 2 + dp[i-2] * 3 + dp[i-3] * 2 + 2) % mod;
+            dp[i] = dp[i-1] * 2 + dp[i-2] * 3 + 2;
+            
+            for(int j = i - 3 ; j >= 1; j--){
+                dp[i] = (dp[i] + dp[j] * 2) % mod;
+            }
         }
         System.out.println(dp[N]);
 
