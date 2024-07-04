@@ -1,9 +1,12 @@
+import java.util.*;
+import java.io.*;
 public class Main {
     static int MAX_N = 19;
     static int N;
     static boolean [] visit = new boolean[MAX_N+1]; 
     public static void main(String[] args) {
-        N = 3;
+        Scanner sc = new Scanner(System.in);
+        N = sc.nextInt();
         int totalCnt = 0;
         for(int node =1 ; node <=N; node++){
             visit[node] = true;
