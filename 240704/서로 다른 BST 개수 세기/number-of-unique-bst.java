@@ -3,22 +3,40 @@ import java.io.*;
 public class Main {
     static int MAX_N = 19;
     static int N;
-    static boolean [] visit = new boolean[MAX_N+1]; 
+    static boolean [] visit = new boolean[MAX_N+1];
+    static int [][] dp = new int[MAX_N+1][MAX_N+1]; // start ~ end에서 갯수 
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         N = sc.nextInt();
-        int totalCnt = 0;
-        for(int node =1 ; node <=N; node++){
-            visit[node] = true;
-            totalCnt += recurDownTreeCnt(node, 1, N, node + " -> ");
-            visit[node] = false;
-        }
-       
-        System.out.println(totalCnt);
         
+        for(int i = 1; i <= N; i++) dp[i][i] = 1;
+
+        for(int len = 2; len <= N; len++){
+            for(int i = 1; i <=N; i++){
+
+                visit = new boolean[MAX_N+1];
+                int totalCnt = 0;
+                for(int node = i ; node < i + len; node++){
+                    visit[node] = true;
+                    totalCnt += recurDownTreeCnt(node, i, i + len - 1, node + " -> ");
+                    visit[node] = false;
+                }
+                dp[i][i+len-1] = totalCnt;
+                
+            }
+        }
+
+        System.out.println(dp[1][N]);
+        
+    }
+    static void pro(){
+
     }
     public static int recurDownTreeCnt(int curr, int start, int end, String route){
         // System.out.println(route);
+        if(dp[start][end] != 0) return dp[start][end];
+
         int left = 0;
         int right = 0;
         //left child
