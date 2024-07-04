@@ -1,64 +1,33 @@
 import java.util.*;
 import java.io.*;
+/*
+ left < parent
+right > parent
+
+*/
 public class Main {
     static int MAX_N = 19;
     static int N;
-    static boolean [] visit = new boolean[MAX_N+1];
-    static int [][] dp = new int[MAX_N+1][MAX_N+1]; // start ~ end에서 갯수 
+    static int [] dp = new int[MAX_N+1]; // idx개의 노드를 갖을 때 서브트리의 갯수
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         N = sc.nextInt();
-        
-        for(int i = 1; i <= N; i++) dp[i][i] = 1;
 
-        for(int len = 2; len <= N; len++){
-            for(int i = 1; i <=N; i++){
-
-                visit = new boolean[MAX_N+1];
-                int totalCnt = 0;
-                for(int node = i ; node < i + len; node++){
-                    visit[node] = true;
-                    totalCnt += recurDownTreeCnt(node, i, i + len - 1, node + " -> ");
-                    visit[node] = false;
-                }
-                dp[i][i+len-1] = totalCnt;
-                
-            }
+        dp[1] = 1;
+        for(int i = 2; i <=N; i++){
+            getSubTreeCount(i);
         }
-
-        System.out.println(dp[1][N]);
+        // System.out.println(Arrays.toString(dp));
+        System.out.println(dp[N]);
         
     }
-    static void pro(){
-
-    }
-    public static int recurDownTreeCnt(int curr, int start, int end, String route){
-        // System.out.println(route);
-        if(dp[start][end] != 0) return dp[start][end];
-
-        int left = 0;
-        int right = 0;
-        //left child
-        for(int node = start; node < curr; node++){
-            if(visit[node]) continue;
-            visit[node] = true;
-            left += recurDownTreeCnt(node, start, curr-1, route + node + " -> ");
-            visit[node] = false;
+    static void getSubTreeCount(int n){
+        for(int root = 1; root <=n; root++){
+            int left = root - 1;
+            int right = n - root;
+            dp[n] += Math.max(1, dp[left]) * Math.max(1, dp[right]);
         }
-        // right child
-        for(int node = curr+1; node <= end; node++){
-            if(visit[node]) continue;
-            visit[node] = true;
-            right += recurDownTreeCnt(node, curr+1, end, route + node + " -> ");
-            visit[node] = false;           
-        }
-
-        
-        if(left == 0 && right == 0) return 1;
-        return Math.max(1, left) * Math.max(1, right);
-
-        
-
     }
+   
 }
