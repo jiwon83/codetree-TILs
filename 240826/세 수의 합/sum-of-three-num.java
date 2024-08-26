@@ -12,30 +12,28 @@ public class Main {
         st = new StringTokenizer(br.readLine());
         N = toInt(st.nextToken());
         K = toInt(st.nextToken());
-        arr = new int[N];
+        arr = new int[N+1];
         st = new StringTokenizer(br.readLine());
-        for(int i = 0; i < N; i++){
+        for(int i = 1; i <= N; i++){
             arr[i] = toInt(st.nextToken());
         }
-        recur(0, -1);
+        recur(1, 0);
         System.out.println(ans);
     }
 
-    static void recur(int idx, int pre){
-        if( idx == 3 ){
-            // System.out.println(Arrays.toString(select));
-            // System.out.println(Arrays.toString(arr));
-            if(sumIsNumber(select, arr, K)){
+    static void recur(int i, int cnt){ // i = arr의 인덱스, cnt = 선택한 갯수
+        if( cnt == 3 || i == N + 1 ){
+            // if(cnt == 3) System.out.println(Arrays.toString(select));
+            if(cnt == 3 && sumIsNumber(select, arr, K)){
+                
                 ans += 1;
             }
             return;
         }
-        for(int i = pre + 1; i < N; i++){
-            select[idx] = i;
-            recur(idx + 1, i);
-            select[idx] = -1;
-        }
-
+        recur(i+1, cnt);
+        select[cnt] = i;
+        recur(i+1, cnt+1);
+        select[cnt] = 0;
     }
     static boolean sumIsNumber(int [] select, int [] arr, int num){
         int sum = 0;
