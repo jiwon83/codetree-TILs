@@ -16,22 +16,20 @@ public class Main {
         st = new StringTokenizer(br.readLine());
         for(int i = 1; i <=N; i++){
             int num = Integer.parseInt(st.nextToken());
-            sum += num;
             arr[i] = num;
-            pq.add(num);
         }
 
 
-        for(int k = 1; k <= N-2; k++){
-            //앞에서 K개를 삭제
-            sum -= arr[k];
-            pq.remove(arr[k]);
-
-            // 가장 작은 값을 꺼내서 평균 구하기
-            int min = pq.peek();
-            double avg = (sum - min) / (N - k - 1); 
-            ans = Math.max(ans, avg);
-
+        for(int k = N; k >=1 ; k--){
+            
+            if( k <= N - 2){
+                // System.out.println("k = "+ k + " , sum = "+ sum );
+                int min = pq.peek();
+                double avg = (sum - min) / (N - k - 1);
+                ans = Math.max(ans, avg);
+            }
+            sum += arr[k];
+            pq.add(arr[k]);
         }
         System.out.println(String.format("%.2f", ans));
         // System.out.println(Math.round(ans * 100) / 100.0);
