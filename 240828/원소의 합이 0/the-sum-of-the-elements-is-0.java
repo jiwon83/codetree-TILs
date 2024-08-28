@@ -3,10 +3,10 @@ import java.io.*;
 public class Main {
 
     static HashMap<Integer, Integer> freqAandB = new HashMap<>();
-    static HashSet<Integer> aSet = new HashSet<>();
-    static HashSet<Integer> bSet = new HashSet<>();
-    static HashSet<Integer> cSet = new HashSet<>();
-    static HashSet<Integer> dSet = new HashSet<>();
+    static List<Integer> aSet = new ArrayList<>();
+    static List<Integer> bSet = new ArrayList<>();
+    static List<Integer> cSet = new ArrayList<>();
+    static List<Integer> dSet = new ArrayList<>();
  
     static int ans, N;
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
