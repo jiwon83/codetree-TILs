@@ -19,7 +19,7 @@ public class Main {
             arr[i] = toInt(st.nextToken());
             freq.put(arr[i], freq.getOrDefault(arr[i], 0) + 1);
         }
-        System.out.println(freq);
+        // System.out.println(freq);
         //for문을 통해 조합 구하기
         for(int i = 1; i <= N-2; i++){
             freq.put(arr[i], freq.getOrDefault(arr[i], 0) - 1);
