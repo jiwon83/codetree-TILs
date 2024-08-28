@@ -25,15 +25,7 @@ public class Main {
         for(int k = 1; k <= N-2; k++){
             //앞에서 K개를 삭제
             sum -= arr[k];
-            while(!removedQ.isEmpty() && !pq.isEmpty() && removedQ.peek() == pq.peek()){
-                pq.poll();
-                removedQ.poll();
-            }
-            if(pq.peek() == arr[k]){
-                pq.poll();
-            }else{
-                removedQ.add(arr[k]);
-            }
+            pq.remove(arr[k]);
 
             // 가장 작은 값을 꺼내서 평균 구하기
             int min = pq.peek();
