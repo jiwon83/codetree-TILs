@@ -30,7 +30,7 @@ public class Main {
     static int satisfiedCnt(int a, int b){
         // int lowerBound = ; // A이상 만족하는 최초 위치
         // int upperBound = ; // B를 초과하는 최초 위치
-        return getLowerBound(a) - getUpperBound(b);
+        return getUpperBound(b) - getLowerBound(a);
     }
     static int getLowerBound(int target){
         int right = N, left = 1;
