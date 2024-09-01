@@ -8,10 +8,10 @@ public class Main {
     
     public static void main(String[] args) throws Exception {
         // 여기에 코드를 작성해주세요.
-        M = Integer.parseInt(br.readLine());
+        M = Long.parseLong(br.readLine());
         st = new StringTokenizer(br.readLine());
-        long a = Integer.parseInt(st.nextToken());
-        long b = Integer.parseInt(st.nextToken());
+        long a = Long.parseLong(st.nextToken());
+        long b = Long.parseLong(st.nextToken());
 
         int minCnt = M + 1;
         int maxCnt = -1;
