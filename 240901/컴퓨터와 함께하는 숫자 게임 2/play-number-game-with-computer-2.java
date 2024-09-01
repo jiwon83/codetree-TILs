@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static int M;
+    static long M;
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     
@@ -10,8 +10,8 @@ public class Main {
         // 여기에 코드를 작성해주세요.
         M = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
-        int a = Integer.parseInt(st.nextToken());
-        int b = Integer.parseInt(st.nextToken());
+        long a = Integer.parseInt(st.nextToken());
+        long b = Integer.parseInt(st.nextToken());
 
         int minCnt = M + 1;
         int maxCnt = -1;
@@ -24,12 +24,12 @@ public class Main {
         System.out.println(minCnt + " "+ maxCnt);
     }
 
-    static int cntOfBinarySearch(int target){
+    static int cntOfBinarySearch(long target){
         int cnt = 0;
-        int left = 1, right = M;
+        long left = 1, right = M;
         while(left <= right){
             cnt += 1;
-            int mid = (left + right) / 2;
+            long mid = (left + right) / 2;
             if(mid == target) return cnt;
             if(mid > target){
                 right = mid - 1;
