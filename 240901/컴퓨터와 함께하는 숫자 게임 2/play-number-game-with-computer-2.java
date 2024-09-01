@@ -16,7 +16,7 @@ public class Main {
         int minCnt = M + 1;
         int maxCnt = -1;
 
-        for(int x = a; x <=b; x++){
+        for(long x = a; x <=b; x++){
             int cnt = cntOfBinarySearch(x);
             minCnt = Math.min(minCnt, cnt);
             maxCnt = Math.max(maxCnt, cnt);
