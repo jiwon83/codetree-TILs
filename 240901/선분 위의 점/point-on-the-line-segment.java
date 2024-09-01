@@ -12,10 +12,12 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
         arr = new int[N+1];
+        
         st = new StringTokenizer(br.readLine());
         for(int i =1; i <=N; i++){
             arr[i] = Integer.parseInt(st.nextToken());
         }
+        Arrays.sort(arr);
 
         for(int i = 0; i < M; i++){
             st = new StringTokenizer(br.readLine());
