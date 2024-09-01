@@ -30,7 +30,8 @@ public class Main {
     static int satisfiedCnt(int a, int b){
         // int lowerBound = ; // A이상 만족하는 최초 위치
         // int upperBound = ; // B를 초과하는 최초 위치
-        return getUpperBound(b) - getLowerBound(a);
+        // return getUpperBound(b) - getLowerBound(a);
+        return getCountBelow(b) - getCountUnder(a);
     }
     static int getLowerBound(int target){
         int right = N, left = 1;
@@ -45,6 +46,34 @@ public class Main {
             }
         }
         return minIdx;
+    }
+    static int getCountUnder(int target){
+        int right = N, left = 1;
+        int maxIdx = 0;
+        while(left <= right){
+            int mid = (left + right) / 2;
+            if(arr[mid] < target){
+                maxIdx = Math.max(maxIdx, mid);
+                left = mid + 1;
+            }else{
+                right = mid - 1;
+            }
+        }
+        return maxIdx;
+    }
+    static int getCountBelow(int target){
+        int right = N, left = 1;
+        int maxIdx = 0;
+        while(left <= right){
+            int mid = (left + right) / 2;
+            if(arr[mid] <= target){
+                maxIdx = Math.max(maxIdx, mid);
+                left = mid + 1;
+            }else{
+                right = mid - 1;
+            }
+        }
+        return maxIdx;
     }
     static int getUpperBound(int target){
         int right = N, left = 1;
