@@ -2,7 +2,6 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static int minIdx;
     static int [] arr = new int[100001];
     static int N, M;
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,16 +21,14 @@ public class Main {
         st = new StringTokenizer(br.readLine());
         for(int i = 0; i < M; i++){
             int target = Integer.parseInt(st.nextToken());
-            minIdx = N+1;
-            lower_bound(target);
-            System.out.println(minIdx == N+1? -1 : minIdx);
+            System.out.println(lower_bound(target));
         }
         
     }
 
-    static void lower_bound(int target){
-        int left = 1;
-        int right = N;
+    static int lower_bound(int target){
+        int left = 1, right = N;
+        int minIdx = N + 1;
 
         while(left <= right){
             int mid = ( left + right ) / 2;
@@ -44,6 +41,7 @@ public class Main {
             }
 
         }
+        return minIdx == N+1? -1 : minIdx;
 
     }
 }
