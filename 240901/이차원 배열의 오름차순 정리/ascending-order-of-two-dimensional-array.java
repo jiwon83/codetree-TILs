@@ -1,18 +1,18 @@
 import java.util.*;
 import java.io.*;
 public class Main {
-    static int N, K;
+    static long N, K;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        N = sc.nextInt();
-        K = sc.nextInt(); 
+        N = sc.nextLong();
+        K = sc.nextLong(); 
         System.out.println(binary_search());
     }
-    static int binary_search(){
-        int left = 1, right = N * N;
-        int ans = right + 1;
+    static long binary_search(){
+        long left = 1, right = N * N;
+        long ans = right + 1;
         while(left <= right){
-            int mid = (left + right) / 2;
+            long mid = (left + right) / 2;
             if(isPossible(mid)){
                 ans = mid;
                 right = mid - 1;
@@ -22,8 +22,8 @@ public class Main {
         }
         return ans;
     }
-    static boolean isPossible(int number){
-        int sum = 0;
+    static boolean isPossible(long number){
+        long sum = 0;
         for(int r = 1; r <= N; r++){
             sum += Math.min( N, number / r );
         }
